@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Altura Design & Build</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green: #0F3A2F;
+    --green-dark: #13291e;
+    --gold: #C8A96A;
+    --gold-light: #dfc08a;
+    --off-white: #F2F2F2;
+    --white: #ffffff;
+    --gray: #888;
+    --gray-light: #e8e8e4;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--off-white);
+    color: var(--green-dark);
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--green-dark);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 48px;
+    height: 72px;
+    border-bottom: 1px solid rgba(200,169,106,0.2);
+  }
+
+  .nav-logo {
+    font-family: 'Cinzel', serif;
+    font-size: 18px;
+    letter-spacing: 0.15em;
+    color: var(--off-white);
+    text-decoration: none;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .nav-logo span { color: var(--gold); font-size: 13px; letter-spacing: 0.2em; display: block; margin-top: -2px; }
+
+  .nav-links {
+    display: flex; gap: 36px; list-style: none;
+  }
+  .nav-links a {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    color: var(--off-white);
+    text-decoration: none;
+    text-transform: uppercase;
+    opacity: 0.85;
+    transition: opacity 0.2s, color 0.2s;
+  }
+  .nav-links a:hover, .nav-links a.active { opacity: 1; color: var(--gold); }
+
+  .nav-cta {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--green-dark);
+    background: var(--gold);
+    border: none;
+    padding: 10px 24px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s;
+    text-transform: uppercase;
+  }
+  .nav-cta:hover { background: var(--gold-light); }
+
+  /* PAGES */
+  .page { display: none; padding-top: 72px; min-height: 100vh; }
+  .page.active { display: block; }
+
+  /* ============ HOME ============ */
+  .hero {
+    background: var(--green-dark);
+    min-height: 92vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    padding: 80px 24px;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 60% 40%, rgba(200,169,106,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 28px;
+    opacity: 0.9;
+  }
+  .hero h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(38px, 6vw, 76px);
+    font-weight: 400;
+    color: var(--off-white);
+    letter-spacing: 0.08em;
+    line-height: 1.15;
+    max-width: 900px;
+  }
+  .hero h1 em { color: var(--gold); font-style: normal; }
+  .hero-sub {
+    font-size: 17px;
+    color: rgba(242,242,242,0.65);
+    max-width: 560px;
+    margin: 28px auto 48px;
+    font-weight: 300;
+    letter-spacing: 0.02em;
+  }
+  .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+  .btn-primary {
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    color: var(--green-dark);
+    background: var(--gold);
+    padding: 16px 40px;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: background 0.2s;
+    cursor: pointer;
+    border: none;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: var(--gold-light); }
+  .btn-outline {
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    color: var(--off-white);
+    background: transparent;
+    padding: 15px 40px;
+    border: 1px solid rgba(242,242,242,0.3);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: border-color 0.2s, color 0.2s;
+    cursor: pointer;
+    display: inline-block;
+  }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+  .hero-divider {
+    width: 60px; height: 1px;
+    background: var(--gold);
+    margin: 60px auto 0;
+    opacity: 0.5;
+  }
+
+  /* SECTION BASE */
+  section { padding: 96px 48px; }
+  .section-label {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.35em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .section-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(26px, 3vw, 40px);
+    font-weight: 400;
+    color: var(--green);
+    letter-spacing: 0.06em;
+    line-height: 1.2;
+    margin-bottom: 20px;
+  }
+  .section-title.light { color: var(--off-white); }
+  .gold-line {
+    width: 48px; height: 1px;
+    background: var(--gold);
+    margin-bottom: 32px;
+  }
+  .centered { text-align: center; }
+  .centered .gold-line { margin-left: auto; margin-right: auto; }
+
+  /* ABOUT SNIPPET */
+  .about-strip {
+    background: var(--white);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+  .about-strip-text { padding: 80px 64px 80px 64px; }
+  .about-strip-text p { color: #444; font-size: 15px; line-height: 1.85; margin-bottom: 16px; }
+  .about-strip-img {
+    background: var(--green);
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+    min-height: 400px;
+  }
+  .about-strip-img svg { width: 60%; opacity: 0.08; }
+  .about-strip-img .img-label {
+    position: absolute;
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    text-transform: uppercase;
+    bottom: 32px; left: 32px;
+  }
+
+  /* SERVICES GRID */
+  .services-section { background: var(--off-white); }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 2px;
+    margin-top: 56px;
+  }
+  .service-card {
+    background: var(--white);
+    padding: 44px 36px;
+    transition: transform 0.25s, box-shadow 0.25s;
+    cursor: default;
+    border-bottom: 3px solid transparent;
+  }
+  .service-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(15,58,47,0.1);
+    border-bottom-color: var(--gold);
+  }
+  .service-icon {
+    width: 48px; height: 48px;
+    border: 1px solid rgba(200,169,106,0.4);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 24px;
+  }
+  .service-icon svg { width: 22px; height: 22px; stroke: var(--gold); fill: none; stroke-width: 1.5; }
+  .service-card h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    color: var(--green);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .service-card p { font-size: 14px; color: #555; line-height: 1.8; }
+
+  /* PORTFOLIO */
+  .portfolio-section { background: var(--green-dark); padding: 96px 48px; }
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-top: 56px;
+  }
+  .portfolio-item {
+    aspect-ratio: 4/3;
+    background: var(--green);
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    display: flex; align-items: flex-end;
+  }
+  .portfolio-item::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(19,41,30,0.85) 0%, transparent 50%);
+    z-index: 1;
+  }
+  .portfolio-item-label {
+    position: relative; z-index: 2;
+    padding: 24px;
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--off-white);
+    text-transform: uppercase;
+  }
+  .portfolio-item-label span { display: block; color: var(--gold); font-size: 10px; margin-bottom: 4px; }
+  .portfolio-placeholder {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: rgba(200,169,106,0.25);
+    text-transform: uppercase;
+  }
+
+  /* REVIEWS */
+  .reviews-section { background: var(--white); }
+  .reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    margin-top: 56px;
+  }
+  .review-card {
+    background: var(--off-white);
+    padding: 36px;
+    border-left: 3px solid var(--gold);
+  }
+  .stars { color: var(--gold); font-size: 14px; margin-bottom: 16px; letter-spacing: 2px; }
+  .review-text { font-size: 15px; color: #444; line-height: 1.8; font-style: italic; margin-bottom: 20px; }
+  .reviewer { font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 0.12em; color: var(--green); text-transform: uppercase; }
+  .reviewer span { color: var(--gray); font-family: 'Inter', sans-serif; letter-spacing: 0; font-size: 12px; display: block; margin-top: 4px; text-transform: none; font-style: normal; }
+
+  /* WHY CHOOSE US */
+  .why-section { background: var(--green); }
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 48px;
+    margin-top: 56px;
+  }
+  .why-item { text-align: center; }
+  .why-number {
+    font-family: 'Cinzel', serif;
+    font-size: 48px;
+    color: var(--gold);
+    opacity: 0.4;
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+  .why-item h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    color: var(--off-white);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .why-item p { font-size: 14px; color: rgba(242,242,242,0.6); line-height: 1.8; }
+
+  /* ============ ABOUT PAGE ============ */
+  .page-hero {
+    background: var(--green-dark);
+    padding: 96px 48px 80px;
+    text-align: center;
+  }
+  .page-hero h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(28px, 4vw, 52px);
+    color: var(--off-white);
+    letter-spacing: 0.1em;
+    font-weight: 400;
+    margin-bottom: 12px;
+  }
+  .page-hero p { color: rgba(242,242,242,0.55); font-size: 15px; }
+
+  .about-content { background: var(--white); padding: 80px 48px; max-width: 900px; margin: 0 auto; }
+  .about-content h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 22px;
+    color: var(--green);
+    letter-spacing: 0.08em;
+    margin-bottom: 16px;
+    margin-top: 48px;
+  }
+  .about-content h2:first-child { margin-top: 0; }
+  .about-content p { font-size: 15px; color: #444; line-height: 1.9; margin-bottom: 20px; }
+  .about-vals {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 24px;
+    margin: 48px 0;
+  }
+  .val-pill {
+    background: var(--off-white);
+    border-left: 3px solid var(--gold);
+    padding: 20px 20px;
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--green);
+    text-transform: uppercase;
+  }
+
+  /* ============ SERVICES PAGE ============ */
+  .services-page-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2px;
+    margin-top: 0;
+  }
+  .service-full-card {
+    background: var(--white);
+    padding: 56px 48px;
+  }
+  .service-full-card:nth-child(even) { background: var(--off-white); }
+  .service-full-card h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 18px;
+    letter-spacing: 0.1em;
+    color: var(--green);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .service-full-card .gold-line { margin-bottom: 20px; }
+  .service-full-card p { font-size: 15px; color: #444; line-height: 1.85; margin-bottom: 16px; }
+  .service-full-card ul { list-style: none; margin-top: 16px; }
+  .service-full-card ul li {
+    font-size: 14px; color: #555; padding: 6px 0;
+    border-bottom: 1px solid var(--gray-light);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .service-full-card ul li::before {
+    content: '';
+    width: 6px; height: 6px; flex-shrink: 0;
+    background: var(--gold); display: inline-block;
+  }
+
+  /* ============ CONTACT PAGE ============ */
+  .contact-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    min-height: calc(100vh - 72px - 80px);
+  }
+  .contact-info {
+    background: var(--green);
+    padding: 72px 56px;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .contact-info h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 28px;
+    color: var(--off-white);
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+    font-weight: 400;
+  }
+  .contact-info p { color: rgba(242,242,242,0.6); font-size: 15px; margin-bottom: 40px; line-height: 1.8; }
+  .contact-detail {
+    display: flex; align-items: flex-start; gap: 16px;
+    margin-bottom: 28px;
+  }
+  .contact-detail-icon {
+    width: 40px; height: 40px; flex-shrink: 0;
+    border: 1px solid rgba(200,169,106,0.35);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .contact-detail-icon svg { width: 18px; height: 18px; stroke: var(--gold); fill: none; stroke-width: 1.5; }
+  .contact-detail-label {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .contact-detail-value { font-size: 14px; color: rgba(242,242,242,0.8); }
+
+  .contact-form-side { background: var(--off-white); padding: 72px 64px; display: flex; flex-direction: column; justify-content: center; }
+  .contact-form-side h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 14px;
+    letter-spacing: 0.15em;
+    color: var(--green);
+    text-transform: uppercase;
+    margin-bottom: 36px;
+  }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-group { margin-bottom: 20px; }
+  .form-group label {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--gray);
+    text-transform: uppercase;
+    font-family: 'Cinzel', serif;
+    margin-bottom: 8px;
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    background: var(--white);
+    border: 1px solid var(--gray-light);
+    padding: 14px 16px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: var(--green-dark);
+    outline: none;
+    transition: border-color 0.2s;
+    appearance: none;
+  }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus { border-color: var(--gold); }
+  .form-group textarea { resize: vertical; min-height: 120px; }
+  .form-submit {
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    color: var(--green-dark);
+    background: var(--gold);
+    border: none;
+    padding: 16px 48px;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: background 0.2s;
+    margin-top: 8px;
+  }
+  .form-submit:hover { background: var(--gold-light); }
+  .form-success {
+    display: none;
+    background: var(--green);
+    color: var(--off-white);
+    padding: 20px 24px;
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 16px;
+    text-align: center;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--green-dark);
+    padding: 56px 48px 32px;
+    border-top: 1px solid rgba(200,169,106,0.15);
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: 48px;
+    margin-bottom: 48px;
+  }
+  .footer-brand-name {
+    font-family: 'Cinzel', serif;
+    font-size: 16px;
+    letter-spacing: 0.15em;
+    color: var(--off-white);
+    margin-bottom: 4px;
+  }
+  .footer-brand-sub {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  footer p { font-size: 13px; color: rgba(242,242,242,0.45); line-height: 1.8; }
+  .footer-col h4 {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { margin-bottom: 10px; }
+  .footer-col ul li a {
+    font-size: 13px;
+    color: rgba(242,242,242,0.5);
+    text-decoration: none;
+    transition: color 0.2s;
+    cursor: pointer;
+  }
+  .footer-col ul li a:hover { color: var(--gold); }
+  .footer-bottom {
+    border-top: 1px solid rgba(200,169,106,0.1);
+    padding-top: 24px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .footer-bottom p { font-size: 12px; color: rgba(242,242,242,0.25); }
+
+  /* BLOG PLACEHOLDER */
+  .blog-coming {
+    background: var(--white);
+    min-height: 60vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center; padding: 80px 24px;
+  }
+  .blog-coming h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 28px;
+    color: var(--green);
+    letter-spacing: 0.1em;
+    margin-bottom: 16px;
+    font-weight: 400;
+  }
+  .blog-coming p { font-size: 15px; color: var(--gray); max-width: 420px; line-height: 1.8; }
+
+  @media (max-width: 768px) {
+    nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    section { padding: 64px 20px; }
+    .about-strip { grid-template-columns: 1fr; }
+    .portfolio-grid { grid-template-columns: 1fr 1fr; }
+    .contact-layout { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .contact-form-side { padding: 48px 24px; }
+    .contact-info { padding: 48px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#" onclick="showPage('home')">
+    <div>
+      ALTURA
+      <span>Design & Build</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#" onclick="showPage('home')" id="nav-home" class="active">Home</a></li>
+    <li><a href="#" onclick="showPage('about')" id="nav-about">About</a></li>
+    <li><a href="#" onclick="showPage('services')" id="nav-services">Services</a></li>
+    <li><a href="#" onclick="showPage('gallery')" id="nav-gallery">Gallery</a></li>
+    <li><a href="#" onclick="showPage('blog')" id="nav-blog">Blog</a></li>
+  </ul>
+  <a class="nav-cta" href="#" onclick="showPage('contact')">Get a Quote</a>
+</nav>
+
+<!-- ======== HOME ======== -->
+<div class="page active" id="page-home">
+
+  <div class="hero">
+    <p class="hero-eyebrow">Residential Remodeling · Bay Area</p>
+    <h1>Built with <em>Precision.</em><br>Designed with Purpose.</h1>
+    <p class="hero-sub">Premium residential remodeling and construction services for homeowners who expect more.</p>
+    <div class="hero-actions">
+      <a class="btn-primary" href="#" onclick="showPage('services')">Our Services</a>
+      <a class="btn-outline" href="#" onclick="showPage('contact')">Free Consultation</a>
+    </div>
+    <div class="hero-divider"></div>
+  </div>
+
+  <!-- ABOUT SNIPPET -->
+  <div class="about-strip">
+    <div class="about-strip-text">
+      <p class="section-label">Who We Are</p>
+      <h2 class="section-title">Craftsmen Who Care About Your Home</h2>
+      <div class="gold-line"></div>
+      <p>Altura Design & Build is a residential remodeling company built on the belief that your home deserves more than a contractor — it deserves a partner. We bring together design thinking, skilled trades, and transparent communication to deliver results that last.</p>
+      <p>From kitchen transformations to full ADU builds, we handle every phase of your project with the attention to detail you'd expect from a luxury build team.</p>
+      <br>
+      <a class="btn-primary" href="#" onclick="showPage('about')" style="font-size:11px;">Learn More About Us</a>
+    </div>
+    <div class="about-strip-img">
+      <div class="img-label">Est. in the Bay Area</div>
+      <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M100 20 L180 80 L180 180 L20 180 L20 80 Z" stroke="#C8A96A" stroke-width="2"/>
+        <rect x="80" y="120" width="40" height="60" stroke="#C8A96A" stroke-width="2"/>
+        <rect x="50" y="100" width="30" height="30" stroke="#C8A96A" stroke-width="1.5"/>
+        <rect x="120" y="100" width="30" height="30" stroke="#C8A96A" stroke-width="1.5"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- SERVICES -->
+  <section class="services-section">
+    <div class="centered">
+      <p class="section-label">What We Do</p>
+      <h2 class="section-title">Our Core Services</h2>
+      <div class="gold-line" style="margin: 0 auto 0;"></div>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8"/><rect x="13" y="3" width="8" height="8"/><rect x="3" y="13" width="8" height="8"/><rect x="13" y="13" width="8" height="8"/></svg>
+        </div>
+        <h3>Bath & Kitchen Remodel</h3>
+        <p>Full-scope kitchen and bathroom renovations — from concept to completion. We handle design, demo, plumbing, tile, cabinetry, and final finishes.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/></svg>
+        </div>
+        <h3>ADU Construction</h3>
+        <p>Accessory Dwelling Units that maximize your property value. We manage permits, design, and build — turning unused space into livable square footage.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 22V12M12 12C12 8 8 6 4 8M12 12C12 8 16 6 20 8M4 8v10M20 8v10"/></svg>
+        </div>
+        <h3>Plumbing</h3>
+        <p>Licensed plumbing services for residential projects — new installs, reroutes, fixture upgrades, and full-system replacements done right the first time.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <h3>Unit Turnovers</h3>
+        <p>Fast, high-quality unit prep between tenants. Painting, flooring, fixture upgrades, repairs — everything needed to get your unit rent-ready quickly.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+        </div>
+        <h3>Investor & Flipper Services</h3>
+        <p>We speak investor. Fast timelines, competitive pricing, and quality work that adds real resale value. Trusted partner for Bay Area flippers and landlords.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="portfolio-section">
+    <div class="centered">
+      <p class="section-label">Our Work</p>
+      <h2 class="section-title light">Recent Projects</h2>
+      <div class="gold-line" style="margin: 0 auto 0;"></div>
+    </div>
+    <div class="portfolio-grid">
+      <div class="portfolio-item" style="background:#1a3d2e;">
+        <div class="portfolio-placeholder">Photo Coming</div>
+        <div class="portfolio-item-label"><span>Kitchen Remodel</span>Walnut Creek, CA</div>
+      </div>
+      <div class="portfolio-item" style="background:#163326;">
+        <div class="portfolio-placeholder">Photo Coming</div>
+        <div class="portfolio-item-label"><span>ADU Build</span>Livermore, CA</div>
+      </div>
+      <div class="portfolio-item" style="background:#1f4535;">
+        <div class="portfolio-placeholder">Photo Coming</div>
+        <div class="portfolio-item-label"><span>Master Bath</span>Pleasanton, CA</div>
+      </div>
+      <div class="portfolio-item" style="background:#123020;">
+        <div class="portfolio-placeholder">Photo Coming</div>
+        <div class="portfolio-item-label"><span>Full Flip</span>Oakland, CA</div>
+      </div>
+      <div class="portfolio-item" style="background:#1a3d2e;">
+        <div class="portfolio-placeholder">Photo Coming</div>
+        <div class="portfolio-item-label"><span>Unit Turnover</span>Fremont, CA</div>
+      </div>
+      <div class="portfolio-item" style="background:#163326;">
+        <div class="portfolio-placeholder">Photo Coming</div>
+        <div class="portfolio-item-label"><span>Kitchen & Bath</span>San Ramon, CA</div>
+      </div>
+    </div>
+    <div style="text-align:center; margin-top: 48px;">
+      <a class="btn-outline" href="#" onclick="showPage('gallery')">View Full Gallery</a>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section class="reviews-section">
+    <div class="centered">
+      <p class="section-label">Client Reviews</p>
+      <h2 class="section-title">What Our Clients Say</h2>
+      <div class="gold-line" style="margin: 0 auto 0;"></div>
+    </div>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <p class="review-text">"Altura completely transformed our kitchen. The attention to detail was incredible — they caught things we never would have noticed and handled everything professionally from start to finish."</p>
+        <p class="reviewer">Sarah M.
+          <span>Walnut Creek, CA · Kitchen Remodel</span>
+        </p>
+      </div>
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <p class="review-text">"We hired Altura for an ADU build and couldn't be happier. They managed the permits, kept us updated every step, and delivered on time. The unit rents for above market rate."</p>
+        <p class="reviewer">James & Tina R.
+          <span>Livermore, CA · ADU Build</span>
+        </p>
+      </div>
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <p class="review-text">"As an investor I've worked with a lot of contractors. Altura is the rare team that actually understands what matters for a flip — speed, quality, and keeping costs honest."</p>
+        <p class="reviewer">David K.
+          <span>Oakland, CA · Investor Services</span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY CHOOSE US -->
+  <section class="why-section">
+    <div class="centered">
+      <p class="section-label" style="color:var(--gold);">Why Altura</p>
+      <h2 class="section-title light">What Sets Us Apart</h2>
+      <div class="gold-line" style="margin:0 auto 0;"></div>
+    </div>
+    <div class="why-grid">
+      <div class="why-item">
+        <div class="why-number">01</div>
+        <h3>Transparent Pricing</h3>
+        <p>No hidden fees, no surprise invoices. You know exactly what you're getting and what it costs before we break ground.</p>
+      </div>
+      <div class="why-item">
+        <div class="why-number">02</div>
+        <h3>Licensed & Insured</h3>
+        <p>Fully licensed California contractor with comprehensive insurance. Your home and your investment are protected.</p>
+      </div>
+      <div class="why-item">
+        <div class="why-number">03</div>
+        <h3>On-Time Delivery</h3>
+        <p>We build realistic timelines and stick to them. Your time matters, and we treat project deadlines as commitments.</p>
+      </div>
+      <div class="why-item">
+        <div class="why-number">04</div>
+        <h3>Residential Focus</h3>
+        <p>We work exclusively on residential projects. This focus means sharper skills, better supplier relationships, and a better result for you.</p>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /home -->
+
+<!-- ======== ABOUT ======== -->
+<div class="page" id="page-about">
+  <div class="page-hero">
+    <p class="section-label" style="justify-content:center; display:block; text-align:center;">Our Story</p>
+    <h1>About Altura</h1>
+    <p>Built on trust, quality, and a genuine love of the craft.</p>
+  </div>
+  <div class="about-content">
+    <h2>Who We Are</h2>
+    <p>Altura Design & Build is a residential remodeling and construction company serving the Bay Area. We were founded by tradespeople who grew frustrated watching homeowners get burned by contractors who overpromised and underdelivered — so we decided to do things differently.</p>
+    <p>We operate with a simple philosophy: treat every project like it's our own home. That means honest estimates, clean job sites, skilled workmanship, and communication that actually keeps you in the loop.</p>
+
+    <h2>What We Believe</h2>
+    <p>We believe your home is one of the most important investments you'll ever make. When you hire us, you're not just hiring a contractor — you're hiring a partner who takes that responsibility seriously.</p>
+    <p>We don't take on commercial work or stretch ourselves thin across too many projects. We stay focused on residential remodeling because that's where our passion and expertise live. Every project gets our full attention.</p>
+
+    <div class="about-vals">
+      <div class="val-pill">Quality First</div>
+      <div class="val-pill">Honest Communication</div>
+      <div class="val-pill">Residential Focused</div>
+      <div class="val-pill">Deadline Driven</div>
+      <div class="val-pill">Licensed & Insured</div>
+    </div>
+
+    <h2>Our Service Area</h2>
+    <p>We proudly serve homeowners and investors across the East Bay and Tri-Valley — including Livermore, Pleasanton, Walnut Creek, Danville, San Ramon, Dublin, Fremont, Oakland, and surrounding communities.</p>
+
+    <h2>Ready to Start?</h2>
+    <p>Every project starts with a free consultation. Tell us what you're envisioning and we'll put together an honest, detailed estimate — no pressure, no runaround.</p>
+    <br>
+    <a class="btn-primary" href="#" onclick="showPage('contact')">Get a Free Consultation</a>
+  </div>
+</div>
+
+<!-- ======== SERVICES ======== -->
+<div class="page" id="page-services">
+  <div class="page-hero">
+    <p class="section-label" style="display:block; text-align:center;">What We Offer</p>
+    <h1>Our Services</h1>
+    <p>Residential remodeling and construction — done right.</p>
+  </div>
+  <div class="services-page-grid">
+    <div class="service-full-card">
+      <h2>Bath & Kitchen Remodel</h2>
+      <div class="gold-line"></div>
+      <p>Your kitchen and bathrooms are the rooms that define how your home feels — and how much it's worth. We handle full-scope remodels from layout redesign through final finishes, bringing together design, plumbing, tile, cabinetry, and everything in between.</p>
+      <p>Whether you want a modest refresh or a complete transformation, we'll help you make the most of your space and budget.</p>
+      <ul>
+        <li>Full gut and rebuild</li>
+        <li>Custom cabinetry and tile</li>
+        <li>Fixture and appliance upgrades</li>
+        <li>Layout optimization</li>
+        <li>Countertop installation (quartz, granite, butcher block)</li>
+      </ul>
+    </div>
+    <div class="service-full-card">
+      <h2>ADU Construction</h2>
+      <div class="gold-line"></div>
+      <p>Accessory Dwelling Units are one of the best investments a Bay Area homeowner can make. Whether you're building a backyard cottage, converting a garage, or adding a junior ADU inside your existing home, Altura manages the entire process — permits included.</p>
+      <p>We understand California's ADU regulations and work proactively with local building departments so your project moves without unnecessary delays.</p>
+      <ul>
+        <li>New detached ADU builds</li>
+        <li>Garage conversions</li>
+        <li>Junior ADUs (JADUs)</li>
+        <li>Permit management</li>
+        <li>Design-build turnkey delivery</li>
+      </ul>
+    </div>
+    <div class="service-full-card">
+      <h2>Plumbing</h2>
+      <div class="gold-line"></div>
+      <p>Licensed plumbing services for residential remodels and standalone projects. From simple fixture swaps to full system reroutes, we bring the same standard of care to plumbing work that we bring to every other trade.</p>
+      <ul>
+        <li>New fixture installation</li>
+        <li>Pipe reroutes for remodels</li>
+        <li>Water heater replacement</li>
+        <li>Leak repair and diagnostics</li>
+        <li>Full bathroom and kitchen rough-in</li>
+      </ul>
+    </div>
+    <div class="service-full-card">
+      <h2>Unit Turnovers</h2>
+      <div class="gold-line"></div>
+      <p>Vacancy is lost revenue. We work quickly and efficiently to get rental units cleaned up, repaired, and move-in ready between tenants — without cutting corners on quality. Landlords and property managers trust us to turn units on tight timelines.</p>
+      <ul>
+        <li>Painting (interior full units)</li>
+        <li>Flooring replacement or refinishing</li>
+        <li>Fixture and hardware upgrades</li>
+        <li>Minor drywall and carpentry</li>
+        <li>Cleaning coordination</li>
+      </ul>
+    </div>
+    <div class="service-full-card">
+      <h2>Investor & Flipper Services</h2>
+      <div class="gold-line"></div>
+      <p>We understand the investor mindset because we've built relationships with people in the business. When you're flipping a property or renovating for resale, every week matters and every dollar counts. Altura delivers quality that shows at open house — on a schedule that respects your carrying costs.</p>
+      <ul>
+        <li>Full-property flip renovations</li>
+        <li>Cosmetic and value-add upgrades</li>
+        <li>Fast-track timelines</li>
+        <li>Competitive volume pricing</li>
+        <li>Trusted repeat-client relationships</li>
+      </ul>
+    </div>
+  </div>
+  <section style="background:var(--green); text-align:center; padding:80px 48px;">
+    <p class="section-label" style="color:var(--gold);">Let's Talk</p>
+    <h2 class="section-title light" style="margin-bottom:16px;">Ready to Get Started?</h2>
+    <p style="color:rgba(242,242,242,0.6); max-width:480px; margin:0 auto 36px; font-size:15px;">Every project starts with a free, no-pressure consultation. Tell us what you need and we'll get back to you within one business day.</p>
+    <a class="btn-primary" href="#" onclick="showPage('contact')">Request a Free Quote</a>
+  </section>
+</div>
+
+<!-- ======== CONTACT ======== -->
+<div class="page" id="page-contact">
+  <div class="page-hero">
+    <p class="section-label" style="display:block; text-align:center;">Reach Out</p>
+    <h1>Contact Us</h1>
+    <p>We respond within one business day.</p>
+  </div>
+  <div class="contact-layout">
+    <div class="contact-info">
+      <h2>Let's Build Something</h2>
+      <p>Have a project in mind? Ready to get a quote? We'd love to hear from you. Fill out the form and we'll be in touch shortly.</p>
+      <div class="contact-detail">
+        <div class="contact-detail-icon">
+          <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <div>
+          <p class="contact-detail-label">Service Area</p>
+          <p class="contact-detail-value">East Bay & Tri-Valley, California</p>
+        </div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-detail-icon">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.7A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9a16 16 0 006.19 6.19l1.26-1.26a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+        </div>
+        <div>
+          <p class="contact-detail-label">Phone</p>
+          <p class="contact-detail-value">(925) 555-0100</p>
+        </div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-detail-icon">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <div>
+          <p class="contact-detail-label">Email</p>
+          <p class="contact-detail-value">info@alturadesignandbuild.com</p>
+        </div>
+      </div>
+    </div>
+    <div class="contact-form-side">
+      <h3>Send Us a Message</h3>
+      <div class="form-row">
+        <div class="form-group">
+          <label>First Name</label>
+          <input type="text" placeholder="John" id="fname">
+        </div>
+        <div class="form-group">
+          <label>Last Name</label>
+          <input type="text" placeholder="Smith" id="lname">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" placeholder="john@example.com" id="email">
+      </div>
+      <div class="form-group">
+        <label>Phone Number</label>
+        <input type="tel" placeholder="(925) 555-0000" id="phone">
+      </div>
+      <div class="form-group">
+        <label>Service Interested In</label>
+        <select id="service">
+          <option value="">Select a service...</option>
+          <option>Bath & Kitchen Remodel</option>
+          <option>ADU Construction</option>
+          <option>Plumbing</option>
+          <option>Unit Turnover</option>
+          <option>Investor / Flipper Services</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Tell Us About Your Project</label>
+        <textarea id="message" placeholder="Describe your project, timeline, or any questions you have..."></textarea>
+      </div>
+      <button class="form-submit" onclick="submitForm()">Send Message</button>
+      <div class="form-success" id="form-success">Thank you — we'll be in touch within one business day.</div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .filter-bar {
+    background: var(--white);
+    padding: 24px 48px;
+    display: flex; gap: 12px; flex-wrap: wrap; align-items: center;
+    border-bottom: 1px solid var(--gray-light);
+    position: sticky; top: 72px; z-index: 50;
+  }
+  .filter-btn {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 8px 20px;
+    border: 1px solid var(--gray-light);
+    background: transparent;
+    color: var(--gray);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .filter-btn:hover { border-color: var(--gold); color: var(--green); }
+  .filter-btn.active { background: var(--green); color: var(--off-white); border-color: var(--green); }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 3px;
+    background: var(--off-white);
+    padding: 3px;
+  }
+  .gallery-item {
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    position: relative;
+    background: var(--green-dark);
+    cursor: pointer;
+  }
+  .gallery-item img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+  .gallery-item:hover img { transform: scale(1.05); }
+  .gallery-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(19,41,30,0.85) 0%, transparent 55%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    display: flex; align-items: flex-end; padding: 20px;
+  }
+  .gallery-item:hover .gallery-overlay { opacity: 1; }
+  .gallery-overlay-text {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--off-white);
+    text-transform: uppercase;
+  }
+  .gallery-overlay-text span { display: block; color: var(--gold); font-size: 10px; margin-bottom: 4px; }
+  .gallery-img-error {
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    background: var(--green);
+    color: rgba(200,169,106,0.3);
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    gap: 8px;
+  }
+  .lightbox {
+    display: none;
+    position: fixed; inset: 0; z-index: 999;
+    background: rgba(13,26,20,0.96);
+    align-items: center; justify-content: center;
+    flex-direction: column;
+  }
+  .lightbox.open { display: flex; }
+  .lightbox img {
+    max-width: 90vw; max-height: 80vh;
+    object-fit: contain;
+    border: 1px solid rgba(200,169,106,0.2);
+  }
+  .lightbox-close {
+    position: absolute; top: 24px; right: 32px;
+    font-family: 'Cinzel', serif; font-size: 12px;
+    letter-spacing: 0.2em; color: var(--gold);
+    cursor: pointer; text-transform: uppercase;
+    background: none; border: none;
+  }
+  .lightbox-caption {
+    font-family: 'Cinzel', serif; font-size: 11px;
+    letter-spacing: 0.15em; color: rgba(242,242,242,0.6);
+    text-transform: uppercase; margin-top: 20px;
+    text-align: center;
+  }
+  .lightbox-caption span { color: var(--gold); display: block; margin-bottom: 4px; }
+  .lightbox-nav {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    background: none; border: 1px solid rgba(200,169,106,0.3);
+    color: var(--gold); font-size: 20px; width: 48px; height: 48px;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: border-color 0.2s;
+  }
+  .lightbox-nav:hover { border-color: var(--gold); }
+  .lightbox-prev { left: 24px; }
+  .lightbox-next { right: 24px; }
+</style>
+
+<!-- ======== GALLERY ======== -->
+<div class="page" id="page-gallery">
+  <div class="page-hero">
+    <p class="section-label" style="display:block; text-align:center;">Our Work</p>
+    <h1>Project Gallery</h1>
+    <p>A look at what we've built for Bay Area homeowners.</p>
+  </div>
+
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterGallery('all', this)">All Projects</button>
+    <button class="filter-btn" onclick="filterGallery('kitchen', this)">Kitchen</button>
+    <button class="filter-btn" onclick="filterGallery('bath', this)">Bath</button>
+    <button class="filter-btn" onclick="filterGallery('flip', this)">Flips</button>
+    <button class="filter-btn" onclick="filterGallery('tile', this)">Tile</button>
+    <button class="filter-btn" onclick="filterGallery('plumbing', this)">Plumbing</button>
+    <button class="filter-btn" onclick="filterGallery('misc', this)">Misc</button>
+  </div>
+
+  <div class="gallery-grid" id="gallery-grid"></div>
+
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" onclick="closeLightbox()">✕ Close</button>
+    <button class="lightbox-nav lightbox-prev" onclick="navLightbox(-1)">&#8592;</button>
+    <img id="lightbox-img" src="" alt="" style="max-width:90vw;max-height:80vh;object-fit:contain;border:1px solid rgba(200,169,106,0.2);">
+
+    <div class="lightbox-caption">
+      <span id="lightbox-cat"></span>
+      <span id="lightbox-title"></span>
+    </div>
+    <button class="lightbox-nav lightbox-next" onclick="navLightbox(1)">&#8594;</button>
+  </div>
+</div>
+<div class="page" id="page-blog">
+  <div class="page-hero">
+    <p class="section-label" style="display:block; text-align:center;">Insights</p>
+    <h1>The Altura Blog</h1>
+    <p>Tips, insights, and project spotlights from our team.</p>
+  </div>
+  <div class="blog-coming">
+    <p class="section-label">Coming Soon</p>
+    <h2>Articles on the Way</h2>
+    <div class="gold-line" style="margin: 16px auto 24px;"></div>
+    <p>We're working on articles about remodeling, ADU investments, and tips for Bay Area homeowners. Check back soon — or reach out to us directly if you have a specific question.</p>
+    <br><br>
+    <a class="btn-primary" href="#" onclick="showPage('contact')">Contact Us Instead</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <p class="footer-brand-name">ALTURA</p>
+      <p class="footer-brand-sub">Design & Build</p>
+      <p>Premium residential remodeling and construction services for Bay Area homeowners and investors.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Navigation</h4>
+      <ul>
+        <li><a onclick="showPage('home')">Home</a></li>
+        <li><a onclick="showPage('about')">About Us</a></li>
+        <li><a onclick="showPage('services')">Services</a></li>
+        <li><a onclick="showPage('gallery')">Gallery</a></li>
+        <li><a onclick="showPage('contact')">Contact</a></li>
+        <li><a onclick="showPage('blog')">Blog</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a onclick="showPage('services')">Bath & Kitchen Remodel</a></li>
+        <li><a onclick="showPage('services')">ADU Construction</a></li>
+        <li><a onclick="showPage('services')">Plumbing</a></li>
+        <li><a onclick="showPage('services')">Unit Turnovers</a></li>
+        <li><a onclick="showPage('services')">Investor Services</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Altura Design & Build. All rights reserved. · Licensed California Contractor</p>
+    <p>East Bay & Tri-Valley, California</p>
+  </div>
+</footer>
+
+<script>
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  const navEl = document.getElementById('nav-' + id);
+  if (navEl) navEl.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  return false;
+}
+
+function submitForm() {
+  const fname = document.getElementById('fname').value.trim();
+  const email = document.getElementById('email').value.trim();
+  if (!fname || !email) {
+    alert('Please fill in your name and email address.');
+    return;
+  }
+  document.getElementById('form-success').style.display = 'block';
+  document.querySelector('.form-submit').style.display = 'none';
+}
+
+// Gallery data — Google Drive thumbnail URLs (open/publicly shared files)
+const galleryProjects = [
+  // 2023 Channing — Kitchen (Before & After)
+  { id: '1HLhdwU-oq4A8PIxVoNZi2TFxlwEstZRw', cat: 'kitchen', project: '2023 Channing', location: 'Berkeley, CA' },
+  { id: '10o_t_oh7uSWXzjDkrF3U83ia61FIpVUb', cat: 'kitchen', project: '2023 Channing', location: 'Berkeley, CA' },
+  { id: '1RAVblcpsHBeXozqEg5r7PVx2rVJSbduA', cat: 'kitchen', project: '2023 Channing', location: 'Berkeley, CA' },
+  { id: '1fejqaVXP2nmTlH3yzAx2frjUVKTN_hes', cat: 'kitchen', project: '2023 Channing', location: 'Berkeley, CA' },
+  { id: '1xiEiryF2TownHEGF1_q4K7V_TJ9FKD3D', cat: 'kitchen', project: '2023 Channing', location: 'Berkeley, CA' },
+  // 2024 Fremont Kitchen
+  { id: '1J_A5GUWlOi066UXS2BZIaDMdG5vQB9u4', cat: 'kitchen', project: '2024 Fremont Kitchen', location: 'Fremont, CA' },
+  { id: '1fUAE8JXqx3snaCBPMgRSo8CzSn5WWdnC', cat: 'kitchen', project: '2024 Fremont Kitchen', location: 'Fremont, CA' },
+  { id: '1_v32tnl3bHncjDnnnEPTCpsJKdK5SuU1', cat: 'kitchen', project: '2024 Fremont Kitchen', location: 'Fremont, CA' },
+  // 2023 San Jose LaTorre
+  { id: '1gWJAwZFhFYnHouFLI-6gVRkmXQOOgyNY', cat: 'flip', project: '2023 San Jose LaTorre', location: 'San Jose, CA' },
+  // 2019 Hayward After — OAKES
+  { id: '1xA7Jwn4YCO5Yy4MPLfUJHXOyUVij2yDk', cat: 'flip', project: '2019 Hayward Oakes', location: 'Hayward, CA' },
+  { id: '10rw1Mi49FWviHALC5hrZiCWdG8bNYIig', cat: 'flip', project: '2019 Hayward Oakes', location: 'Hayward, CA' },
+  { id: '1BHVyIleHliA0GHtMN-xS5jvKHeeUlfgQ', cat: 'flip', project: '2019 Hayward Oakes', location: 'Hayward, CA' },
+  // 2023 San Jose Burke
+  { id: '1VMW_p0-Q2ceaRCSDpz23GsbBHoaex5e6', cat: 'flip', project: '2023 San Jose Burke', location: 'San Jose, CA' },
+  { id: '10RZ_3TAKrjazQcUIY93YsEJ6Y72N6kmd', cat: 'flip', project: '2023 San Jose Burke', location: 'San Jose, CA' },
+  { id: '1EUeCtv1DTUPRDT_LaM6Cp0rwpwk0Q5RH', cat: 'flip', project: '2023 San Jose Burke', location: 'San Jose, CA' },
+  // 2024 San Ramon Tanner
+  { id: '1v1Zf-dNmkRv3z1KECSrpe834PRL41SP2', cat: 'bath', project: '2024 San Ramon Tanner', location: 'San Ramon, CA' },
+  { id: '1I845F6a2RrH9WcrD325A16g_ZnH0HRxu', cat: 'bath', project: '2024 San Ramon Tanner', location: 'San Ramon, CA' },
+  { id: '12bd3BV6tubGfx2lC6L_bUhHvbx-xBc5F', cat: 'bath', project: '2024 San Ramon Tanner', location: 'San Ramon, CA' },
+];
+
+function driveThumb(id) {
+  return `https://drive.google.com/thumbnail?id=${id}&sz=w800`;
+}
+
+function buildGallery(filter) {
+  const grid = document.getElementById('gallery-grid');
+  const items = filter === 'all' ? galleryProjects : galleryProjects.filter(p => p.cat === filter);
+  grid.innerHTML = items.map((p) => `
+    <div class="gallery-item" data-cat="${p.cat}" onclick="openLightbox(${galleryProjects.indexOf(p)})">
+      <img src="${driveThumb(p.id)}" alt="${p.project}" loading="lazy"
+        onerror="this.parentElement.innerHTML='<div class=gallery-img-error><div>📷</div><div>${p.project}</div></div>'">
+      <div class="gallery-overlay">
+        <div class="gallery-overlay-text">
+          <span>${p.cat.charAt(0).toUpperCase() + p.cat.slice(1)}</span>
+          ${p.project} &mdash; ${p.location}
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function filterGallery(cat, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  buildGallery(cat);
+}
+
+let currentLightboxIndex = 0;
+function openLightbox(idx) {
+  currentLightboxIndex = idx;
+  const p = galleryProjects[idx];
+  document.getElementById('lightbox-img').src = driveThumb(p.id);
+  document.getElementById('lightbox-cat').textContent = p.cat.charAt(0).toUpperCase() + p.cat.slice(1);
+  document.getElementById('lightbox-title').textContent = `${p.project} — ${p.location}`;
+  document.getElementById('lightbox').classList.add('open');
+}
+function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); }
+function navLightbox(dir) {
+  currentLightboxIndex = (currentLightboxIndex + dir + galleryProjects.length) % galleryProjects.length;
+  openLightbox(currentLightboxIndex);
+}
+document.addEventListener('keydown', e => {
+  const lb = document.getElementById('lightbox');
+  if (!lb.classList.contains('open')) return;
+  if (e.key === 'ArrowRight') navLightbox(1);
+  if (e.key === 'ArrowLeft') navLightbox(-1);
+  if (e.key === 'Escape') closeLightbox();
+});
+
+buildGallery('all');
+
+document.querySelectorAll('a[href="#"]').forEach(a => {
+  a.addEventListener('click', e => e.preventDefault());
+});
+</script>
+
+</body>
+</html>
