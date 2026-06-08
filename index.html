@@ -1080,6 +1080,16 @@
     text-transform: uppercase;
     gap: 8px;
   }
+  .gallery-loading, .gallery-empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 64px 24px;
+    color: rgba(200,169,106,0.6);
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
   .lightbox {
     display: none;
     position: fixed; inset: 0; z-index: 999;
@@ -1129,11 +1139,13 @@
 
   <div class="filter-bar">
     <button class="filter-btn active" onclick="filterGallery('all', this)">All Projects</button>
-    <button class="filter-btn" onclick="filterGallery('kitchen', this)">Kitchen</button>
-    <button class="filter-btn" onclick="filterGallery('bath', this)">Bath</button>
     <button class="filter-btn" onclick="filterGallery('flip', this)">Flips</button>
+    <button class="filter-btn" onclick="filterGallery('kitchen', this)">Kitchens</button>
+    <button class="filter-btn" onclick="filterGallery('bath', this)">Bathrooms</button>
     <button class="filter-btn" onclick="filterGallery('tile', this)">Tile</button>
     <button class="filter-btn" onclick="filterGallery('plumbing', this)">Plumbing</button>
+    <button class="filter-btn" onclick="filterGallery('countertop', this)">Countertops</button>
+    <button class="filter-btn" onclick="filterGallery('appliance', this)">Appliances</button>
     <button class="filter-btn" onclick="filterGallery('misc', this)">Misc</button>
   </div>
 
@@ -1142,7 +1154,7 @@
   <div class="lightbox" id="lightbox">
     <button class="lightbox-close" onclick="closeLightbox()">✕ Close</button>
     <button class="lightbox-nav lightbox-prev" onclick="navLightbox(-1)">&#8592;</button>
-    <img id="lightbox-img" src="" alt="" style="max-width:90vw;max-height:80vh;object-fit:contain;border:1px solid rgba(200,169,106,0.2);">
+    <img id="lightbox-img" src="" alt="" referrerpolicy="no-referrer" style="max-width:90vw;max-height:80vh;object-fit:contain;border:1px solid rgba(200,169,106,0.2);">
 
     <div class="lightbox-caption">
       <span id="lightbox-cat"></span>
@@ -1225,45 +1237,333 @@ function submitForm() {
   document.querySelector('.form-submit').style.display = 'none';
 }
 
-// Gallery data — Google Drive thumbnail URLs (open/publicly shared files)
-const galleryProjects = [
-  // 2023 Channing — Kitchen (Before & After)
-  { id: '1HLhdwU-oq4A8PIxVoNZi2TFxlwEstZRw', cat: 'kitchen', project: '2023 Channing', location: 'Berkeley, CA' },
-  { id: '10o_t_oh7uSWXzjDkrF3U83ia61FIpVUb', cat: 'kitchen', project: '2023 Channing', location: 'Berkeley, CA' },
-  { id: '1RAVblcpsHBeXozqEg5r7PVx2rVJSbduA', cat: 'kitchen', project: '2023 Channing', location: 'Berkeley, CA' },
-  { id: '1fejqaVXP2nmTlH3yzAx2frjUVKTN_hes', cat: 'kitchen', project: '2023 Channing', location: 'Berkeley, CA' },
-  { id: '1xiEiryF2TownHEGF1_q4K7V_TJ9FKD3D', cat: 'kitchen', project: '2023 Channing', location: 'Berkeley, CA' },
-  // 2024 Fremont Kitchen
-  { id: '1J_A5GUWlOi066UXS2BZIaDMdG5vQB9u4', cat: 'kitchen', project: '2024 Fremont Kitchen', location: 'Fremont, CA' },
-  { id: '1fUAE8JXqx3snaCBPMgRSo8CzSn5WWdnC', cat: 'kitchen', project: '2024 Fremont Kitchen', location: 'Fremont, CA' },
-  { id: '1_v32tnl3bHncjDnnnEPTCpsJKdK5SuU1', cat: 'kitchen', project: '2024 Fremont Kitchen', location: 'Fremont, CA' },
-  // 2023 San Jose LaTorre
-  { id: '1gWJAwZFhFYnHouFLI-6gVRkmXQOOgyNY', cat: 'flip', project: '2023 San Jose LaTorre', location: 'San Jose, CA' },
-  // 2019 Hayward After — OAKES
-  { id: '1xA7Jwn4YCO5Yy4MPLfUJHXOyUVij2yDk', cat: 'flip', project: '2019 Hayward Oakes', location: 'Hayward, CA' },
-  { id: '10rw1Mi49FWviHALC5hrZiCWdG8bNYIig', cat: 'flip', project: '2019 Hayward Oakes', location: 'Hayward, CA' },
-  { id: '1BHVyIleHliA0GHtMN-xS5jvKHeeUlfgQ', cat: 'flip', project: '2019 Hayward Oakes', location: 'Hayward, CA' },
-  // 2023 San Jose Burke
-  { id: '1VMW_p0-Q2ceaRCSDpz23GsbBHoaex5e6', cat: 'flip', project: '2023 San Jose Burke', location: 'San Jose, CA' },
-  { id: '10RZ_3TAKrjazQcUIY93YsEJ6Y72N6kmd', cat: 'flip', project: '2023 San Jose Burke', location: 'San Jose, CA' },
-  { id: '1EUeCtv1DTUPRDT_LaM6Cp0rwpwk0Q5RH', cat: 'flip', project: '2023 San Jose Burke', location: 'San Jose, CA' },
-  // 2024 San Ramon Tanner
-  { id: '1v1Zf-dNmkRv3z1KECSrpe834PRL41SP2', cat: 'bath', project: '2024 San Ramon Tanner', location: 'San Ramon, CA' },
-  { id: '1I845F6a2RrH9WcrD325A16g_ZnH0HRxu', cat: 'bath', project: '2024 San Ramon Tanner', location: 'San Ramon, CA' },
-  { id: '12bd3BV6tubGfx2lC6L_bUhHvbx-xBc5F', cat: 'bath', project: '2024 San Ramon Tanner', location: 'San Ramon, CA' },
+// ============================================================
+//  GALLERY — auto-syncs from your "MAB Project Pictures" Drive folder
+// ============================================================
+// The whole gallery is driven by ONE Google Drive folder. Each subfolder
+// inside it is a project; drop photos into a project folder (or add a new
+// project folder) and the site picks them up automatically.
+//
+// IT ALREADY WORKS RIGHT NOW using the snapshot in FALLBACK_PROJECTS below
+// (the 172 photos currently in your Drive). To make it LIVE — so new photos
+// appear without any code change — do this one-time setup:
+//
+//  1) Get a free Google API key:
+//       console.cloud.google.com → New Project
+//       → APIs & Services → Library → enable "Google Drive API"
+//       → Credentials → Create credentials → API key
+//       (Recommended) Restrict the key to the Drive API + your website
+//       domain so it can't be reused elsewhere.
+//  2) Make sure the master folder is shared "Anyone with the link → Viewer"
+//     (subfolders/photos inherit this).
+//  3) Paste the key into apiKey below. Done.
+//
+//  Mapping new projects: a new subfolder shows up automatically under the
+//  "Misc" filter with its folder name as the caption. To give it a proper
+//  project type/title, add one line to FOLDER_MAP (keyed by folder name).
+//  Folder names like "2023 San Jose Burke" or "Project, City CA" are parsed
+//  into a title + location automatically when not in the map.
+// ============================================================
+const GALLERY_CONFIG = {
+  apiKey: '',  // ← paste your Google API key here to go live (optional)
+  masterFolderId: '1MJPuXBVFikDOkA0kj_8ouw0-bTVgoIIA',  // "MAB Project Pictures"
+};
+
+// Maps each Drive subfolder (by its exact name) to a project type + label.
+// Unlisted folders default to the "misc" filter with an auto-derived title.
+const FOLDER_MAP = {
+    "2019 Hayward After Pictures OAKES": { cat: 'flip', project: "Oakes Residence", location: 'Hayward, CA' },
+    "2019 San Francisco After Harin": { cat: 'flip', project: "Harin Residence", location: 'San Francisco, CA' },
+    "2023 CHANNING Before and After ( Kitchen Experts)": { cat: 'kitchen', project: "Channing Kitchen", location: 'Berkeley, CA' },
+    "2023 Hayward Mahal": { cat: 'flip', project: "Mahal Project", location: 'Hayward, CA' },
+    "2023 San Jose BURKE": { cat: 'flip', project: "Burke Residence", location: 'San Jose, CA' },
+    "2023 San Jose LaTorre": { cat: 'flip', project: "LaTorre Residence", location: 'San Jose, CA' },
+    "2024 Discovery Bay Bris": { cat: 'flip', project: "Bris Project", location: 'Discovery Bay, CA' },
+    "2024 Fremont kitchen After": { cat: 'kitchen', project: "Fremont Kitchen", location: 'Fremont, CA' },
+    "2024 San Ramon Tanner": { cat: 'bath', project: "Tanner Bath", location: 'San Ramon, CA' },
+    "Appliance Installs": { cat: 'appliance', project: "Appliance Install", location: 'Bay Area, CA' },
+    "Countertop/ Slab Installs": { cat: 'countertop', project: "Countertop & Slab Install", location: 'Bay Area, CA' },
+    "MISC": { cat: 'misc', project: "Project Highlight", location: 'Bay Area, CA' },
+    "Plumbing Service": { cat: 'plumbing', project: "Plumbing Service", location: 'Bay Area, CA' },
+    "Rental Units": { cat: 'misc', project: "Rental Turnover", location: 'Bay Area, CA' },
+    "Tile Service": { cat: 'tile', project: "Tile Work", location: 'Bay Area, CA' },
+};
+
+// Snapshot of the current Drive gallery (172 photos) — shown immediately,
+// and used as a fallback if the live Drive load is unavailable.
+const FALLBACK_PROJECTS = [
+  // --- FLIP ---
+  { id: '1xA7Jwn4YCO5Yy4MPLfUJHXOyUVij2yDk', cat: 'flip', project: "Oakes Residence", location: 'Hayward, CA' },
+  { id: '1GtExwT44-JHbLHQa2GMJMypSmsrOZGrG', cat: 'flip', project: "Oakes Residence", location: 'Hayward, CA' },
+  { id: '10rw1Mi49FWviHALC5hrZiCWdG8bNYIig', cat: 'flip', project: "Oakes Residence", location: 'Hayward, CA' },
+  { id: '1BHVyIleHliA0GHtMN-xS5jvKHeeUlfgQ', cat: 'flip', project: "Oakes Residence", location: 'Hayward, CA' },
+  { id: '1Eq1AvxaxI8HKTDwWcJPPDTNVY3FjkKlr', cat: 'flip', project: "Harin Residence", location: 'San Francisco, CA' },
+  { id: '14Vlww5SmjMNveB5rh44o0io1EZk5hiwq', cat: 'flip', project: "Harin Residence", location: 'San Francisco, CA' },
+  { id: '1Wx8J8Fhn2HC_wbPNUS2JTUrevAdLxiVd', cat: 'flip', project: "Harin Residence", location: 'San Francisco, CA' },
+  { id: '1UksOp1C3saexEqw7sE4f8azN-4HN-Ad1', cat: 'flip', project: "Harin Residence", location: 'San Francisco, CA' },
+  { id: '1TEpUKqSoeiSlydY04aEbF9-TK8f95Blg', cat: 'flip', project: "Harin Residence", location: 'San Francisco, CA' },
+  { id: '15IAyYXuL_llf0htwpYpTs6OsKTsi_-fa', cat: 'flip', project: "Mahal Project", location: 'Hayward, CA' },
+  { id: '1XVKhMvQqUM3fjgwD-kSUtfFpgRbDJsw8', cat: 'flip', project: "Mahal Project", location: 'Hayward, CA' },
+  { id: '1DTOUwTfYS-VZM79pOapQuYPQcmdT63R4', cat: 'flip', project: "Mahal Project", location: 'Hayward, CA' },
+  { id: '1qjnRY6MxaiW5YozNe-T5TgaRnFJbepHK', cat: 'flip', project: "Mahal Project", location: 'Hayward, CA' },
+  { id: '1fW7bqzsWXL-GI1eoeVHt9GXUeXSL2OQ8', cat: 'flip', project: "Mahal Project", location: 'Hayward, CA' },
+  { id: '1tryN5z2rE3P-fesdMM4gTWuoW1iA2wH1', cat: 'flip', project: "Mahal Project", location: 'Hayward, CA' },
+  { id: '1uEYrue_XKiQLW2Z1I9IM3IaQJdqntE_E', cat: 'flip', project: "Mahal Project", location: 'Hayward, CA' },
+  { id: '1s9WbzBRyFLG01sW5SULIpQ6HYXdJQCVL', cat: 'flip', project: "Mahal Project", location: 'Hayward, CA' },
+  { id: '1fnrYjWcXhHZXS93bUupS6G3v3cgEuD3n', cat: 'flip', project: "Mahal Project", location: 'Hayward, CA' },
+  { id: '1viQ5LZGegH3cpJeHCizmAhXp_qfSBSsw', cat: 'flip', project: "Mahal Project", location: 'Hayward, CA' },
+  { id: '14bTHQKV31QaZMBmwD38C_GPNETrUWLqs', cat: 'flip', project: "Mahal Project", location: 'Hayward, CA' },
+  { id: '12SCIh9Cils0bzWcbWv19Anx0OTqHLRGo', cat: 'flip', project: "Mahal Project", location: 'Hayward, CA' },
+  { id: '10fKuPDAzjrygjqPAS3Uox4zz24G3tses', cat: 'flip', project: "Mahal Project", location: 'Hayward, CA' },
+  { id: '1XBA3ZCyFc6Xre1ZmCdianVT4Wk9zxHZp', cat: 'flip', project: "Mahal Project", location: 'Hayward, CA' },
+  { id: '1RcY3sBYJOc5Q9qiSnlknv2_G2RWKfFP7', cat: 'flip', project: "Mahal Project", location: 'Hayward, CA' },
+  { id: '1Rvhi_NTUkK-HJbV6dJHLXuOHtiFulYoA', cat: 'flip', project: "Mahal Project", location: 'Hayward, CA' },
+  { id: '1e-boqY8sFmsCg_quDGvZskJcTi9X-HdD', cat: 'flip', project: "Mahal Project", location: 'Hayward, CA' },
+  { id: '1Jp12Zogi5uOKBe8Fa9lekLjZXJ6IgxMK', cat: 'flip', project: "Mahal Project", location: 'Hayward, CA' },
+  { id: '17Q7YC7waoAcfFEsEspLzebdEl4dTo2uo', cat: 'flip', project: "Burke Residence", location: 'San Jose, CA' },
+  { id: '1EUeCtv1DTUPRDT_LaM6Cp0rwpwk0Q5RH', cat: 'flip', project: "Burke Residence", location: 'San Jose, CA' },
+  { id: '10RZ_3TAKrjazQcUIY93YsEJ6Y72N6kmd', cat: 'flip', project: "Burke Residence", location: 'San Jose, CA' },
+  { id: '1xQs_QIoUTAXmQ6rZEZ8vQA0_9UksDAaT', cat: 'flip', project: "Burke Residence", location: 'San Jose, CA' },
+  { id: '1C-3pTD3szZ7h6NMbKO2NFinoQTECGx8g', cat: 'flip', project: "Burke Residence", location: 'San Jose, CA' },
+  { id: '1VMW_p0-Q2ceaRCSDpz23GsbBHoaex5e6', cat: 'flip', project: "Burke Residence", location: 'San Jose, CA' },
+  { id: '1fFoxwjuqzyLrTMRJ4xrK1CaTOqzs3KZI', cat: 'flip', project: "Burke Residence", location: 'San Jose, CA' },
+  { id: '1_rW_HYOugOWt4U6OUUw_vThnlYAFDjO3', cat: 'flip', project: "LaTorre Residence", location: 'San Jose, CA' },
+  { id: '1vXvonfPZXj1NUaQXKkOzuLYT5SZIYls5', cat: 'flip', project: "LaTorre Residence", location: 'San Jose, CA' },
+  { id: '17j_z5H1SPxxlpjknuzqvrljr84qM2LhQ', cat: 'flip', project: "LaTorre Residence", location: 'San Jose, CA' },
+  { id: '1uC_PBtm8b2yTgOJxIo_oBKEh92rQ2kCY', cat: 'flip', project: "LaTorre Residence", location: 'San Jose, CA' },
+  { id: '1gWJAwZFhFYnHouFLI-6gVRkmXQOOgyNY', cat: 'flip', project: "LaTorre Residence", location: 'San Jose, CA' },
+  { id: '1Y-vO4adoStEHAMvigY6X4AvMh-deY6SP', cat: 'flip', project: "LaTorre Residence", location: 'San Jose, CA' },
+  { id: '1Vrtf1qxZ_XP429FJwMN23XlKC-yDrgY4', cat: 'flip', project: "LaTorre Residence", location: 'San Jose, CA' },
+  { id: '1oa8_6WQ4axtcEpc89NjKR0BAzRukLOuP', cat: 'flip', project: "Bris Project", location: 'Discovery Bay, CA' },
+  { id: '1x9x5Y1uEplvcH9-OagCrNMJmo8wR1UwN', cat: 'flip', project: "Bris Project", location: 'Discovery Bay, CA' },
+  { id: '1zCcSOD0RMJBEXQ6tsJK3n7UQ-iiq413c', cat: 'flip', project: "Bris Project", location: 'Discovery Bay, CA' },
+  { id: '1oT1gNF7UiIZN4MuVHVljTRrf0YUdshS8', cat: 'flip', project: "Bris Project", location: 'Discovery Bay, CA' },
+  { id: '1e6gpKqPVcORX2iPv4LDa6gDCMrwZLimz', cat: 'flip', project: "Bris Project", location: 'Discovery Bay, CA' },
+  { id: '1Tp56Z6VBKi-TJ3wVGvCYakl0xfvwhX53', cat: 'flip', project: "Bris Project", location: 'Discovery Bay, CA' },
+  // --- KITCHEN ---
+  { id: '1xiEiryF2TownHEGF1_q4K7V_TJ9FKD3D', cat: 'kitchen', project: "Channing Kitchen", location: 'Berkeley, CA' },
+  { id: '1RAVblcpsHBeXozqEg5r7PVx2rVJSbduA', cat: 'kitchen', project: "Channing Kitchen", location: 'Berkeley, CA' },
+  { id: '1ywnQjibTVsmAaEFR0IRvIPe3k5kdv5De', cat: 'kitchen', project: "Channing Kitchen", location: 'Berkeley, CA' },
+  { id: '19tOTVJw5vzhpXYNeiBRJuTIOFBfc-P1R', cat: 'kitchen', project: "Channing Kitchen", location: 'Berkeley, CA' },
+  { id: '1HLhdwU-oq4A8PIxVoNZi2TFxlwEstZRw', cat: 'kitchen', project: "Channing Kitchen", location: 'Berkeley, CA' },
+  { id: '1C0MapDbSwjNDrv-FUrfpSF2yIE_dZyz8', cat: 'kitchen', project: "Channing Kitchen", location: 'Berkeley, CA' },
+  { id: '1M_hzFr4j_0A5oYtUo_sYr6lPLw4l6WN1', cat: 'kitchen', project: "Channing Kitchen", location: 'Berkeley, CA' },
+  { id: '1fejqaVXP2nmTlH3yzAx2frjUVKTN_hes', cat: 'kitchen', project: "Channing Kitchen", location: 'Berkeley, CA' },
+  { id: '10o_t_oh7uSWXzjDkrF3U83ia61FIpVUb', cat: 'kitchen', project: "Channing Kitchen", location: 'Berkeley, CA' },
+  { id: '1fUAE8JXqx3snaCBPMgRSo8CzSn5WWdnC', cat: 'kitchen', project: "Fremont Kitchen", location: 'Fremont, CA' },
+  { id: '1dYO0CZBHOQmAONwJDEs9KHpaZWJ6iqRq', cat: 'kitchen', project: "Fremont Kitchen", location: 'Fremont, CA' },
+  { id: '1_v32tnl3bHncjDnnnEPTCpsJKdK5SuU1', cat: 'kitchen', project: "Fremont Kitchen", location: 'Fremont, CA' },
+  { id: '1J_A5GUWlOi066UXS2BZIaDMdG5vQB9u4', cat: 'kitchen', project: "Fremont Kitchen", location: 'Fremont, CA' },
+  // --- BATH ---
+  { id: '1I845F6a2RrH9WcrD325A16g_ZnH0HRxu', cat: 'bath', project: "Tanner Bath", location: 'San Ramon, CA' },
+  { id: '1KVUIyZeDgClhjBoJsibAtwZ14w__LzON', cat: 'bath', project: "Tanner Bath", location: 'San Ramon, CA' },
+  { id: '1v1Zf-dNmkRv3z1KECSrpe834PRL41SP2', cat: 'bath', project: "Tanner Bath", location: 'San Ramon, CA' },
+  { id: '12bd3BV6tubGfx2lC6L_bUhHvbx-xBc5F', cat: 'bath', project: "Tanner Bath", location: 'San Ramon, CA' },
+  { id: '15Ffz7evXP5HbrUmI3-PD-jrsptlTsX5e', cat: 'bath', project: "Tanner Bath", location: 'San Ramon, CA' },
+  // --- TILE ---
+  { id: '1ceHmJZOWRqLWsOi1ts1XQyVXTvYT1PIW', cat: 'tile', project: "Tile Work", location: 'Bay Area, CA' },
+  { id: '1uYEFE5zRZNDteLE-KIHeGMO5xaSLHn-c', cat: 'tile', project: "Tile Work", location: 'Bay Area, CA' },
+  { id: '1K_EFYu3eyj2ozg8Zj_4IO6Z9C2L4T9vs', cat: 'tile', project: "Tile Work", location: 'Bay Area, CA' },
+  { id: '1TP2Yv5UXjPiSMUYhLWydqAc-MduNfijd', cat: 'tile', project: "Tile Work", location: 'Bay Area, CA' },
+  { id: '1ueJ8zWCpTV4TWFo0ZvLIPp-F2IOJ7iel', cat: 'tile', project: "Tile Work", location: 'Bay Area, CA' },
+  { id: '1m3JpNuUTF6ROTty5Y7UApD_Xc2vbWAUg', cat: 'tile', project: "Tile Work", location: 'Bay Area, CA' },
+  { id: '1my6Wqb8JdgzYLaY-FqQq0OKKENsiPy3M', cat: 'tile', project: "Tile Work", location: 'Bay Area, CA' },
+  { id: '1Ie74A_8wAjtmJ9RI88axVxeLvTLowgn2', cat: 'tile', project: "Tile Work", location: 'Bay Area, CA' },
+  // --- PLUMBING ---
+  { id: '1ehKQF-2g1eGYTOCOAiAmj0sYuagaL5gV', cat: 'plumbing', project: "Plumbing Service", location: 'Bay Area, CA' },
+  { id: '1MT697LwWlPA3Q1aG6CEcZb7hz7E1wF1l', cat: 'plumbing', project: "Plumbing Service", location: 'Bay Area, CA' },
+  { id: '1rEkmzkJHhC1uUgdaWLNna2NxR7JcneXg', cat: 'plumbing', project: "Plumbing Service", location: 'Bay Area, CA' },
+  { id: '19XFCRD1loR2hY34aY1ge-8lrMqV_Dj9z', cat: 'plumbing', project: "Plumbing Service", location: 'Bay Area, CA' },
+  { id: '12xLdE8-KwY4i0BdobcHCPqSF1bApXMOq', cat: 'plumbing', project: "Plumbing Service", location: 'Bay Area, CA' },
+  { id: '1dv-FneI3lJS-VxWBYg_l3NQxbwDmVVgk', cat: 'plumbing', project: "Plumbing Service", location: 'Bay Area, CA' },
+  { id: '1SQ5JN3LZhXSwhrv83d97O3DOIQSOhiJl', cat: 'plumbing', project: "Plumbing Service", location: 'Bay Area, CA' },
+  { id: '1VsQYjQmtaeYue59JUauJVxfpZHLm9izq', cat: 'plumbing', project: "Plumbing Service", location: 'Bay Area, CA' },
+  { id: '11Lpg8cky0C6CBdFAlw9l6-yJQ7xHFRT4', cat: 'plumbing', project: "Plumbing Service", location: 'Bay Area, CA' },
+  { id: '1FdJ5Gwx3d53Z6unPBDBZ776fkO8FIBjD', cat: 'plumbing', project: "Plumbing Service", location: 'Bay Area, CA' },
+  { id: '1NLBkCJv7cH9EQxZMxCrvv6YbOikINCOI', cat: 'plumbing', project: "Plumbing Service", location: 'Bay Area, CA' },
+  { id: '1bWxJV0JHXqrsMv7vqk1BtP_NRqSDKkVx', cat: 'plumbing', project: "Plumbing Service", location: 'Bay Area, CA' },
+  { id: '1m9c_5d5CeED07AHFcYx3CjgHi7iRV1AV', cat: 'plumbing', project: "Plumbing Service", location: 'Bay Area, CA' },
+  { id: '1xQcQ4zPtGaFHES5hrfrP4YyLFx53ccpK', cat: 'plumbing', project: "Plumbing Service", location: 'Bay Area, CA' },
+  { id: '1asgrdj08SLx3lvgs6h4YU2UuG9M31q2L', cat: 'plumbing', project: "Plumbing Service", location: 'Bay Area, CA' },
+  { id: '1jAzHuBNfPmT9O2T2lWg_TMeGFBIO2YBP', cat: 'plumbing', project: "Plumbing Service", location: 'Bay Area, CA' },
+  { id: '1bEtOOIX45XVK9W73X07uyCDtfG2qr4F7', cat: 'plumbing', project: "Plumbing Service", location: 'Bay Area, CA' },
+  { id: '1Joor1LDO4fEtZF7xPA4kpWzD8SkgzXfs', cat: 'plumbing', project: "Plumbing Service", location: 'Bay Area, CA' },
+  { id: '1r_7RVF7PenRNs2ivELnpremw8WX-UHrz', cat: 'plumbing', project: "Plumbing Service", location: 'Bay Area, CA' },
+  { id: '1wJxvA0AmMXy-MeeDIHFJ5_eHyAQDdAel', cat: 'plumbing', project: "Plumbing Service", location: 'Bay Area, CA' },
+  { id: '1yq77KoCsxBHN1BHRg_bFekofbciMpaHr', cat: 'plumbing', project: "Plumbing Service", location: 'Bay Area, CA' },
+  { id: '10JDzrFgqRoHBZ-Cp2mEe3iDE2S6YCRhv', cat: 'plumbing', project: "Plumbing Service", location: 'Bay Area, CA' },
+  { id: '1bMlzqulQDfaSol-l0DtvAvZLSlhU_kId', cat: 'plumbing', project: "Plumbing Service", location: 'Bay Area, CA' },
+  { id: '1ZkIa2qpetgN4EtiZ4LyPntTOf73W5cPG', cat: 'plumbing', project: "Plumbing Service", location: 'Bay Area, CA' },
+  { id: '1C-YfE7nHOVO4HG8RR5cHJEf40e2gyfo2', cat: 'plumbing', project: "Plumbing Service", location: 'Bay Area, CA' },
+  { id: '1niJWWngZFkk5bvgJjxQ6QZ0szfiXdj4a', cat: 'plumbing', project: "Plumbing Service", location: 'Bay Area, CA' },
+  { id: '1uN9birK4_ChURsFCWdBHZfB5-3hyjoDn', cat: 'plumbing', project: "Plumbing Service", location: 'Bay Area, CA' },
+  { id: '1CTmWoDJnxOHWYbZAIfhoykkUGoaKR0Fi', cat: 'plumbing', project: "Plumbing Service", location: 'Bay Area, CA' },
+  { id: '1I8znPH8xWxu37wB1NHysSi5KW6moSKYf', cat: 'plumbing', project: "Plumbing Service", location: 'Bay Area, CA' },
+  { id: '1gtKT3bfjEOrPOnUsVsr5rw_hBn-0Lz_k', cat: 'plumbing', project: "Plumbing Service", location: 'Bay Area, CA' },
+  { id: '1t-a0BHSPiaY1tDZ35dKcHRr9QkSHcSuq', cat: 'plumbing', project: "Plumbing Service", location: 'Bay Area, CA' },
+  { id: '1OTtPg_JZQCGZEmSzdJZVKG7GDiMEfjLJ', cat: 'plumbing', project: "Plumbing Service", location: 'Bay Area, CA' },
+  { id: '1bx4m3Unj6BUaOnExgIGcy0tYKJ8Uag9K', cat: 'plumbing', project: "Plumbing Service", location: 'Bay Area, CA' },
+  { id: '1_ntDjzx5kJlUBqPcb3qkJgHfyYNGyc5I', cat: 'plumbing', project: "Plumbing Service", location: 'Bay Area, CA' },
+  { id: '1TDAIXu_C_5k3iOxML74NwVjqHuKze6aE', cat: 'plumbing', project: "Plumbing Service", location: 'Bay Area, CA' },
+  { id: '1bB8zn7uufUxIf9k3pAAUzVSz1ElaNtdK', cat: 'plumbing', project: "Plumbing Service", location: 'Bay Area, CA' },
+  { id: '1ftZecnha8e2Q7dsWpm7jp2WNDylXOV0w', cat: 'plumbing', project: "Plumbing Service", location: 'Bay Area, CA' },
+  { id: '1AmQQHSvQSaBbrwrNMIvFPQWzgrtQ8ZlZ', cat: 'plumbing', project: "Plumbing Service", location: 'Bay Area, CA' },
+  { id: '1e4R7cvt-9O-4PJyVvtDlATfTAy5crJ0D', cat: 'plumbing', project: "Plumbing Service", location: 'Bay Area, CA' },
+  { id: '1WyktqdWDTc37p8Y-pegy9rIJERbnSxFm', cat: 'plumbing', project: "Plumbing Service", location: 'Bay Area, CA' },
+  { id: '1FBVZsUUscyrF8LkDMrdyTwNffSXa27Ht', cat: 'plumbing', project: "Plumbing Service", location: 'Bay Area, CA' },
+  { id: '1LC-ID2irMO-kEAxPXjlK0kWXzDzF2VKl', cat: 'plumbing', project: "Plumbing Service", location: 'Bay Area, CA' },
+  { id: '1ORxNHN093xTCZaWRXujcvkvJELIhNQrL', cat: 'plumbing', project: "Plumbing Service", location: 'Bay Area, CA' },
+  { id: '1FlC6S8hrHmdyP5GVNR0asRu3O9VFehjU', cat: 'plumbing', project: "Plumbing Service", location: 'Bay Area, CA' },
+  // --- COUNTERTOP ---
+  { id: '19G_pl3mpUC8A9o1btWY-pqWARePWy36d', cat: 'countertop', project: "Countertop & Slab Install", location: 'Bay Area, CA' },
+  { id: '1hEWHnQYznAqHawsbe1Af-SGO9ZGokhba', cat: 'countertop', project: "Countertop & Slab Install", location: 'Bay Area, CA' },
+  { id: '18I7SZpBCCG31f-KSdS042i7SuJp9Umon', cat: 'countertop', project: "Countertop & Slab Install", location: 'Bay Area, CA' },
+  { id: '1dBRLg15x8mMpWR13On90OhgBGsM4TkPB', cat: 'countertop', project: "Countertop & Slab Install", location: 'Bay Area, CA' },
+  { id: '1GeAexF4Xqe8g8hA6wuF-BRuBhWvm9Qr_', cat: 'countertop', project: "Countertop & Slab Install", location: 'Bay Area, CA' },
+  { id: '1gEfDp0ycZ5wyy8xVXpnARYJEXpjcxH_5', cat: 'countertop', project: "Countertop & Slab Install", location: 'Bay Area, CA' },
+  { id: '1n9O4-Hgc7KHwblj-4CSsOlzB8NnmUI6Q', cat: 'countertop', project: "Countertop & Slab Install", location: 'Bay Area, CA' },
+  { id: '1lV4CsMeo4wDNMhL3g7pVDIw9XHUerBP_', cat: 'countertop', project: "Countertop & Slab Install", location: 'Bay Area, CA' },
+  { id: '1ppSmtpJCGIUxOv4IBpOV15K3ngJhk6mF', cat: 'countertop', project: "Countertop & Slab Install", location: 'Bay Area, CA' },
+  { id: '1-kEPeBzbG0phiFVQKmtdzZ_g0TRgHkmq', cat: 'countertop', project: "Countertop & Slab Install", location: 'Bay Area, CA' },
+  { id: '1nZ-oisrSg0FqXbDD3ci2j1Cuw7Od_kFG', cat: 'countertop', project: "Countertop & Slab Install", location: 'Bay Area, CA' },
+  { id: '1RyA5AIgz2i8co44_Yi2TA9a9vJJuUSKv', cat: 'countertop', project: "Countertop & Slab Install", location: 'Bay Area, CA' },
+  { id: '17fILk7Gb-nyaqYGGbp2A_Ow_UzuVU0GG', cat: 'countertop', project: "Countertop & Slab Install", location: 'Bay Area, CA' },
+  { id: '1hUcqrfMz2BeN_60TpGtmPjAnSAyg9Z5O', cat: 'countertop', project: "Countertop & Slab Install", location: 'Bay Area, CA' },
+  { id: '1OFlj-sW3b5yBuUO3qhFTMHdm0AswQYAG', cat: 'countertop', project: "Countertop & Slab Install", location: 'Bay Area, CA' },
+  { id: '1f2Cn049Nv__zmixOX5Z7wgYXKwpk9Gjz', cat: 'countertop', project: "Countertop & Slab Install", location: 'Bay Area, CA' },
+  { id: '13pnlmeqaCqgsdH4JJrIuT6ilNwWKkuDd', cat: 'countertop', project: "Countertop & Slab Install", location: 'Bay Area, CA' },
+  { id: '1Zmw0tKiS0Yeh36lZJNgOZrBleR8dTKLT', cat: 'countertop', project: "Countertop & Slab Install", location: 'Bay Area, CA' },
+  { id: '1lveLM1rbZ0jsb-rWuxqvW0NIrzA4LUnB', cat: 'countertop', project: "Countertop & Slab Install", location: 'Bay Area, CA' },
+  // --- APPLIANCE ---
+  { id: '1Qs0OeYgUe6s-N6GaeXc8A_1W7zx84LY1', cat: 'appliance', project: "Appliance Install", location: 'Bay Area, CA' },
+  { id: '1kCTifssf18BLwKn6UKd3FjdD6foQCEu8', cat: 'appliance', project: "Appliance Install", location: 'Bay Area, CA' },
+  { id: '1Q4C_JJMecvGgZAfgWyjerUtw6tnKZ2-t', cat: 'appliance', project: "Appliance Install", location: 'Bay Area, CA' },
+  { id: '1eSFE9TouYMYZ0szO_blJNWr-5fxlFpn9', cat: 'appliance', project: "Appliance Install", location: 'Bay Area, CA' },
+  { id: '1bMnoKoXI6KXvuqAe-n9cIFfJNtypmTY8', cat: 'appliance', project: "Appliance Install", location: 'Bay Area, CA' },
+  { id: '1uD8Fplg1woZygarTJCzq-uEGl-2oy9if', cat: 'appliance', project: "Appliance Install", location: 'Bay Area, CA' },
+  { id: '1S8w8hw9qp-ATLZ0Qriv0dakueT17A6-l', cat: 'appliance', project: "Appliance Install", location: 'Bay Area, CA' },
+  { id: '1_X8-kiAkD6QypaQVv8ZNKB4n_nOMAkOU', cat: 'appliance', project: "Appliance Install", location: 'Bay Area, CA' },
+  { id: '1MiiWIt_8_y-nBa8M3tw0dme20_meJ_pB', cat: 'appliance', project: "Appliance Install", location: 'Bay Area, CA' },
+  { id: '1yzhiim7F2Ht9hVDZIcBNB5d6e2raXQ3W', cat: 'appliance', project: "Appliance Install", location: 'Bay Area, CA' },
+  { id: '1_iKp7vquLxcmSq2nW5Odp3680qtbvz_V', cat: 'appliance', project: "Appliance Install", location: 'Bay Area, CA' },
+  { id: '1IRTS2QWRO6IRSEHC5Ivt3edu1FZnkh74', cat: 'appliance', project: "Appliance Install", location: 'Bay Area, CA' },
+  { id: '1Ol26m_-vRAITax0EHjz9cHcdlrSuX3LG', cat: 'appliance', project: "Appliance Install", location: 'Bay Area, CA' },
+  { id: '1a2TCMIZvfhOaSXK4I-Jc6cJcnj6iTLen', cat: 'appliance', project: "Appliance Install", location: 'Bay Area, CA' },
+  { id: '1_Rm0sx0HmXjmDWBUpjeSXHSv4EjGx690', cat: 'appliance', project: "Appliance Install", location: 'Bay Area, CA' },
+  { id: '1ObiKc7eilhXizZyIajFBZW5PaLBnDN1M', cat: 'appliance', project: "Appliance Install", location: 'Bay Area, CA' },
+  { id: '13061a4Yy_OPJTXE_qifgJt8CecLHBE9X', cat: 'appliance', project: "Appliance Install", location: 'Bay Area, CA' },
+  { id: '1Oa2EXYW_axM7zcsPGu_ttqBalRAo_Ekb', cat: 'appliance', project: "Appliance Install", location: 'Bay Area, CA' },
+  { id: '11Myi-7o9LLq3T3xErp0SnrvxVxs9Evc_', cat: 'appliance', project: "Appliance Install", location: 'Bay Area, CA' },
+  { id: '1OPpGoRFcc2Mp1zHOi55RujVBgMQXJe46', cat: 'appliance', project: "Appliance Install", location: 'Bay Area, CA' },
+  { id: '1kEYdgmie13pQ0BMg7gPfsgUFWQ6BwhqQ', cat: 'appliance', project: "Appliance Install", location: 'Bay Area, CA' },
+  // --- MISC ---
+  { id: '1GNtTqTsv94TH0Hcs7xebj2vSJzEhDggf', cat: 'misc', project: "Project Highlight", location: 'Bay Area, CA' },
+  { id: '1cJA6ipg0OXysf_LrRWygDAAv0N2zQ-89', cat: 'misc', project: "Rental Turnover", location: 'Bay Area, CA' },
+  { id: '1XQlSMEy3ex-LvM36BjauVhjTWw486RZ2', cat: 'misc', project: "Rental Turnover", location: 'Bay Area, CA' },
+  { id: '1DZXfYZ0GtOXIvQHhpOtG8Cxu6IghW60G', cat: 'misc', project: "Rental Turnover", location: 'Bay Area, CA' },
+  { id: '1JARtCHlQMx5QxioaRG2GSqL6aXfu_Ghk', cat: 'misc', project: "Rental Turnover", location: 'Bay Area, CA' },
+  { id: '1seMdxoWjjznuBoevdIYNBiGTHPcrkLU_', cat: 'misc', project: "Rental Turnover", location: 'Bay Area, CA' },
+  { id: '1-fP6-MpmNVOxHoJWgDO95Z7FhrT9ayAJ', cat: 'misc', project: "Rental Turnover", location: 'Bay Area, CA' },
+  { id: '1Q_Z7IB1I2WmzRMOKXv0UuD0vfoAxPVg-', cat: 'misc', project: "Rental Turnover", location: 'Bay Area, CA' },
+  { id: '1_JZ9l5dzjggCqDcYwJEBWE6NdblMh74_', cat: 'misc', project: "Rental Turnover", location: 'Bay Area, CA' },
+  { id: '1f4tBlxfMPnU9rFumUGV0jpS3jQwE7LCj', cat: 'misc', project: "Rental Turnover", location: 'Bay Area, CA' },
+  { id: '1zABEJtqssr069rukLGYWdhfo-u4w6Mr9', cat: 'misc', project: "Rental Turnover", location: 'Bay Area, CA' },
+  { id: '11ZkhV5fO-645APe3Q25e3j5_XeTohIph', cat: 'misc', project: "Project Highlight", location: 'Bay Area, CA' },
+  { id: '1GG9891--b7By_5aR4j2YO43ZUoUb5m4f', cat: 'misc', project: "Project Highlight", location: 'Bay Area, CA' },
+  { id: '1KIPHgMPalp1r13r40_bn8UV5iV7fRjfJ', cat: 'misc', project: "Project Highlight", location: 'Bay Area, CA' },
+  { id: '1KsT3vRhAj01qNMdcfCyLj9MznWHV8Yb-', cat: 'misc', project: "Project Highlight", location: 'Bay Area, CA' },
 ];
 
-function driveThumb(id) {
-  return `https://drive.google.com/thumbnail?id=${id}&sz=w800`;
+// Live gallery data — populated from Drive on load (or from FALLBACK_PROJECTS).
+let galleryProjects = [];
+
+const DRIVE_API = 'https://www.googleapis.com/drive/v3/files';
+const FOLDER_MIME = 'application/vnd.google-apps.folder';
+
+async function driveList(query) {
+  const url = `${DRIVE_API}?q=${encodeURIComponent(query)}`
+    + `&key=${encodeURIComponent(GALLERY_CONFIG.apiKey)}`
+    + `&fields=${encodeURIComponent('files(id,name,mimeType)')}`
+    + `&pageSize=1000&orderBy=name`;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`Drive API ${res.status}`);
+  return (await res.json()).files || [];
+}
+
+function parseProjectName(name) {
+  const parts = name.split(/\s*[—–-]\s+|,\s+/);
+  if (parts.length >= 2) {
+    return { project: parts[0].trim(), location: parts.slice(1).join(', ').trim() };
+  }
+  return { project: name.trim(), location: '' };
+}
+
+function cleanFileName(name) {
+  return name.replace(/\.[^.]+$/, '').replace(/[_-]+/g, ' ').trim();
+}
+
+// Resolve a subfolder's project type + caption: explicit FOLDER_MAP entry
+// wins, otherwise fall back to 'misc' with a title parsed from the name.
+function resolveFolder(name) {
+  if (FOLDER_MAP[name]) return FOLDER_MAP[name];
+  const meta = parseProjectName(name);
+  return { cat: 'misc', project: meta.project, location: meta.location };
+}
+
+// Read one project subfolder → array of gallery items.
+async function loadProjectFolder(folder) {
+  const meta = resolveFolder(folder.name);
+  const imgs = await driveList(
+    `'${folder.id}' in parents and mimeType contains 'image/' and trashed = false`);
+  return imgs.map(img => ({
+    id: img.id, cat: meta.cat, project: meta.project, location: meta.location,
+  }));
+}
+
+async function loadGalleryFromDrive() {
+  // No API key yet → show the bundled snapshot (still the full current gallery).
+  if (!GALLERY_CONFIG.apiKey.trim() || !GALLERY_CONFIG.masterFolderId) {
+    galleryProjects = FALLBACK_PROJECTS;
+    buildGallery('all');
+    return;
+  }
+  const grid = document.getElementById('gallery-grid');
+  grid.innerHTML = '<div class="gallery-loading">Loading projects…</div>';
+  try {
+    const children = await driveList(
+      `'${GALLERY_CONFIG.masterFolderId}' in parents and trashed = false`);
+    const subfolders = children.filter(c => c.mimeType === FOLDER_MIME);
+    const looseImgs = children.filter(c => (c.mimeType || '').startsWith('image/'));
+    const folderResults = await Promise.all(subfolders.map(loadProjectFolder));
+    galleryProjects = folderResults.flat();
+    // Loose photos sitting directly in the master folder → Misc.
+    looseImgs.forEach(img => galleryProjects.push(
+      { id: img.id, cat: 'misc', project: cleanFileName(img.name), location: 'Bay Area, CA' }));
+    if (galleryProjects.length === 0) galleryProjects = FALLBACK_PROJECTS;
+  } catch (err) {
+    console.error('Gallery: Drive load failed, using bundled snapshot.', err);
+    galleryProjects = FALLBACK_PROJECTS;
+  }
+  buildGallery('all');
+}
+
+// Google's image CDN (lh3) — handles many concurrent loads without the
+// aggressive rate-limiting of the drive.google.com/thumbnail endpoint.
+function driveThumb(id, size) {
+  return `https://lh3.googleusercontent.com/d/${id}=w${size || 800}`;
 }
 
 function buildGallery(filter) {
   const grid = document.getElementById('gallery-grid');
   const items = filter === 'all' ? galleryProjects : galleryProjects.filter(p => p.cat === filter);
+  if (items.length === 0) {
+    grid.innerHTML = '<div class="gallery-empty">No projects in this category yet — check back soon.</div>';
+    return;
+  }
   grid.innerHTML = items.map((p) => `
     <div class="gallery-item" data-cat="${p.cat}" onclick="openLightbox(${galleryProjects.indexOf(p)})">
-      <img src="${driveThumb(p.id)}" alt="${p.project}" loading="lazy"
-        onerror="this.parentElement.innerHTML='<div class=gallery-img-error><div>📷</div><div>${p.project}</div></div>'">
+      <img src="${driveThumb(p.id)}" alt="${p.project}" loading="lazy" referrerpolicy="no-referrer"
+        onerror="if(!this.dataset.retry){this.dataset.retry=1;this.src='https://drive.google.com/thumbnail?id=${p.id}&sz=w800';}else{this.parentElement.innerHTML='<div class=gallery-img-error><div>📷</div><div>${p.project}</div></div>';}">
       <div class="gallery-overlay">
         <div class="gallery-overlay-text">
           <span>${p.cat.charAt(0).toUpperCase() + p.cat.slice(1)}</span>
@@ -1284,7 +1584,7 @@ let currentLightboxIndex = 0;
 function openLightbox(idx) {
   currentLightboxIndex = idx;
   const p = galleryProjects[idx];
-  document.getElementById('lightbox-img').src = driveThumb(p.id);
+  document.getElementById('lightbox-img').src = driveThumb(p.id, 1600);
   document.getElementById('lightbox-cat').textContent = p.cat.charAt(0).toUpperCase() + p.cat.slice(1);
   document.getElementById('lightbox-title').textContent = `${p.project} — ${p.location}`;
   document.getElementById('lightbox').classList.add('open');
@@ -1302,7 +1602,7 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape') closeLightbox();
 });
 
-buildGallery('all');
+loadGalleryFromDrive();
 
 document.querySelectorAll('a[href="#"]').forEach(a => {
   a.addEventListener('click', e => e.preventDefault());
