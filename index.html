@@ -962,7 +962,7 @@
         </div>
         <div>
           <p class="contact-detail-label">Phone</p>
-          <p class="contact-detail-value">(925) 555-0100</p>
+          <p class="contact-detail-value"><a href="tel:+12096629532" style="color:inherit; text-decoration:none;">(209) 662-9532</a></p>
         </div>
       </div>
       <div class="contact-detail">
@@ -1297,6 +1297,74 @@ const FOLDER_MAP = {
     "Tile Service": { cat: 'tile', project: "Tile Work", location: 'Bay Area, CA' },
 };
 
+// Per-photo tweaks applied on top of the folder mapping (works for both the
+// bundled snapshot and live Drive sync). `room` adds a photo to a filter
+// without removing it from its project tab; `cat` reassigns it outright.
+const PHOTO_OVERRIDES = {
+  // Bathrooms surfaced from across all projects — these also remain in
+  // their original project/service tab (Flips, Plumbing, etc.).
+  '1DTOUwTfYS-VZM79pOapQuYPQcmdT63R4': { room: 'bath' },  // Mahal Project
+  '1qjnRY6MxaiW5YozNe-T5TgaRnFJbepHK': { room: 'bath' },  // Mahal Project
+  '1viQ5LZGegH3cpJeHCizmAhXp_qfSBSsw': { room: 'bath' },  // Mahal Project
+  '12SCIh9Cils0bzWcbWv19Anx0OTqHLRGo': { room: 'bath' },  // Mahal Project
+  '10fKuPDAzjrygjqPAS3Uox4zz24G3tses': { room: 'bath' },  // Mahal Project
+  '1XBA3ZCyFc6Xre1ZmCdianVT4Wk9zxHZp': { room: 'bath' },  // Mahal Project
+  '1RcY3sBYJOc5Q9qiSnlknv2_G2RWKfFP7': { room: 'bath' },  // Mahal Project
+  '1Rvhi_NTUkK-HJbV6dJHLXuOHtiFulYoA': { room: 'bath' },  // Mahal Project
+  '1_rW_HYOugOWt4U6OUUw_vThnlYAFDjO3': { room: 'bath' },  // LaTorre Residence
+  '1vXvonfPZXj1NUaQXKkOzuLYT5SZIYls5': { room: 'bath' },  // LaTorre Residence
+  '17j_z5H1SPxxlpjknuzqvrljr84qM2LhQ': { room: 'bath' },  // LaTorre Residence
+  '1uC_PBtm8b2yTgOJxIo_oBKEh92rQ2kCY': { room: 'bath' },  // LaTorre Residence
+  '1gWJAwZFhFYnHouFLI-6gVRkmXQOOgyNY': { room: 'bath' },  // LaTorre Residence
+  '1Y-vO4adoStEHAMvigY6X4AvMh-deY6SP': { room: 'bath' },  // LaTorre Residence
+  '1Vrtf1qxZ_XP429FJwMN23XlKC-yDrgY4': { room: 'bath' },  // LaTorre Residence
+  '1oa8_6WQ4axtcEpc89NjKR0BAzRukLOuP': { room: 'bath' },  // Bris Project
+  '1x9x5Y1uEplvcH9-OagCrNMJmo8wR1UwN': { room: 'bath' },  // Bris Project
+  '1oT1gNF7UiIZN4MuVHVljTRrf0YUdshS8': { room: 'bath' },  // Bris Project
+  '1e6gpKqPVcORX2iPv4LDa6gDCMrwZLimz': { room: 'bath' },  // Bris Project
+  '1Tp56Z6VBKi-TJ3wVGvCYakl0xfvwhX53': { room: 'bath' },  // Bris Project
+  '1dv-FneI3lJS-VxWBYg_l3NQxbwDmVVgk': { room: 'bath' },  // Plumbing Service
+  '1SQ5JN3LZhXSwhrv83d97O3DOIQSOhiJl': { room: 'bath' },  // Plumbing Service
+  '11Lpg8cky0C6CBdFAlw9l6-yJQ7xHFRT4': { room: 'bath' },  // Plumbing Service
+  '1NLBkCJv7cH9EQxZMxCrvv6YbOikINCOI': { room: 'bath' },  // Plumbing Service
+  '1bWxJV0JHXqrsMv7vqk1BtP_NRqSDKkVx': { room: 'bath' },  // Plumbing Service
+  '1m9c_5d5CeED07AHFcYx3CjgHi7iRV1AV': { room: 'bath' },  // Plumbing Service
+  '1xQcQ4zPtGaFHES5hrfrP4YyLFx53ccpK': { room: 'bath' },  // Plumbing Service
+  '1asgrdj08SLx3lvgs6h4YU2UuG9M31q2L': { room: 'bath' },  // Plumbing Service
+  '1jAzHuBNfPmT9O2T2lWg_TMeGFBIO2YBP': { room: 'bath' },  // Plumbing Service
+  '1bEtOOIX45XVK9W73X07uyCDtfG2qr4F7': { room: 'bath' },  // Plumbing Service
+  '1Joor1LDO4fEtZF7xPA4kpWzD8SkgzXfs': { room: 'bath' },  // Plumbing Service
+  '1r_7RVF7PenRNs2ivELnpremw8WX-UHrz': { room: 'bath' },  // Plumbing Service
+  '1wJxvA0AmMXy-MeeDIHFJ5_eHyAQDdAel': { room: 'bath' },  // Plumbing Service
+  '1bMlzqulQDfaSol-l0DtvAvZLSlhU_kId': { room: 'bath' },  // Plumbing Service
+  '1ZkIa2qpetgN4EtiZ4LyPntTOf73W5cPG': { room: 'bath' },  // Plumbing Service
+  '1C-YfE7nHOVO4HG8RR5cHJEf40e2gyfo2': { room: 'bath' },  // Plumbing Service
+  '1niJWWngZFkk5bvgJjxQ6QZ0szfiXdj4a': { room: 'bath' },  // Plumbing Service
+  '1uN9birK4_ChURsFCWdBHZfB5-3hyjoDn': { room: 'bath' },  // Plumbing Service
+  '1CTmWoDJnxOHWYbZAIfhoykkUGoaKR0Fi': { room: 'bath' },  // Plumbing Service
+  '1I8znPH8xWxu37wB1NHysSi5KW6moSKYf': { room: 'bath' },  // Plumbing Service
+  '1OTtPg_JZQCGZEmSzdJZVKG7GDiMEfjLJ': { room: 'bath' },  // Plumbing Service
+  '1TDAIXu_C_5k3iOxML74NwVjqHuKze6aE': { room: 'bath' },  // Plumbing Service
+  '1bB8zn7uufUxIf9k3pAAUzVSz1ElaNtdK': { room: 'bath' },  // Plumbing Service
+  '1ftZecnha8e2Q7dsWpm7jp2WNDylXOV0w': { room: 'bath' },  // Plumbing Service
+  '1AmQQHSvQSaBbrwrNMIvFPQWzgrtQ8ZlZ': { room: 'bath' },  // Plumbing Service
+  '1e4R7cvt-9O-4PJyVvtDlATfTAy5crJ0D': { room: 'bath' },  // Plumbing Service
+  '1WyktqdWDTc37p8Y-pegy9rIJERbnSxFm': { room: 'bath' },  // Plumbing Service
+  '1LC-ID2irMO-kEAxPXjlK0kWXzDzF2VKl': { room: 'bath' },  // Plumbing Service
+  '1ORxNHN093xTCZaWRXujcvkvJELIhNQrL': { room: 'bath' },  // Plumbing Service
+  '1FlC6S8hrHmdyP5GVNR0asRu3O9VFehjU': { room: 'bath' },  // Plumbing Service
+  '18I7SZpBCCG31f-KSdS042i7SuJp9Umon': { room: 'bath' },  // Countertop & Slab Install
+  '1kEYdgmie13pQ0BMg7gPfsgUFWQ6BwhqQ': { room: 'bath' },  // Appliance Install
+  '1GNtTqTsv94TH0Hcs7xebj2vSJzEhDggf': { room: 'bath' },  // Project Highlight
+  '1XQlSMEy3ex-LvM36BjauVhjTWw486RZ2': { room: 'bath' },  // Rental Turnover
+  // 'Tanner' was a full remodel; reclassify its kitchen shots, keep the bath.
+  '1I845F6a2RrH9WcrD325A16g_ZnH0HRxu': { cat: 'kitchen', project: "Tanner Remodel" },
+  '1KVUIyZeDgClhjBoJsibAtwZ14w__LzON': { cat: 'kitchen', project: "Tanner Remodel" },
+  '12bd3BV6tubGfx2lC6L_bUhHvbx-xBc5F': { cat: 'kitchen', project: "Tanner Remodel" },
+  '15Ffz7evXP5HbrUmI3-PD-jrsptlTsX5e': { cat: 'kitchen', project: "Tanner Remodel" },
+  '1v1Zf-dNmkRv3z1KECSrpe834PRL41SP2': { project: "Tanner Remodel" },
+};
+
 // Snapshot of the current Drive gallery (172 photos) — shown immediately,
 // and used as a fallback if the live Drive load is unavailable.
 const FALLBACK_PROJECTS = [
@@ -1510,6 +1578,14 @@ function cleanFileName(name) {
   return name.replace(/\.[^.]+$/, '').replace(/[_-]+/g, ' ').trim();
 }
 
+// Apply per-photo overrides (by file id) on top of folder-derived data.
+function applyOverrides(list) {
+  return list.map(p => {
+    const o = PHOTO_OVERRIDES[p.id];
+    return o ? { ...p, ...o } : p;
+  });
+}
+
 // Resolve a subfolder's project type + caption: explicit FOLDER_MAP entry
 // wins, otherwise fall back to 'misc' with a title parsed from the name.
 function resolveFolder(name) {
@@ -1531,7 +1607,7 @@ async function loadProjectFolder(folder) {
 async function loadGalleryFromDrive() {
   // No API key yet → show the bundled snapshot (still the full current gallery).
   if (!GALLERY_CONFIG.apiKey.trim() || !GALLERY_CONFIG.masterFolderId) {
-    galleryProjects = FALLBACK_PROJECTS;
+    galleryProjects = applyOverrides(FALLBACK_PROJECTS);
     buildGallery('all');
     return;
   }
@@ -1552,6 +1628,7 @@ async function loadGalleryFromDrive() {
     console.error('Gallery: Drive load failed, using bundled snapshot.', err);
     galleryProjects = FALLBACK_PROJECTS;
   }
+  galleryProjects = applyOverrides(galleryProjects);
   buildGallery('all');
 }
 
@@ -1563,7 +1640,9 @@ function driveThumb(id, size) {
 
 function buildGallery(filter) {
   const grid = document.getElementById('gallery-grid');
-  const items = filter === 'all' ? galleryProjects : galleryProjects.filter(p => p.cat === filter);
+  const items = filter === 'all'
+    ? galleryProjects
+    : galleryProjects.filter(p => p.cat === filter || p.room === filter);
   if (items.length === 0) {
     grid.innerHTML = '<div class="gallery-empty">No projects in this category yet — check back soon.</div>';
     return;
