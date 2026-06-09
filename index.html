@@ -273,6 +273,14 @@
     cursor: pointer;
     display: flex; align-items: flex-end;
   }
+  .portfolio-item img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    z-index: 0;
+    transition: transform 0.5s ease;
+  }
+  .portfolio-item:hover img { transform: scale(1.05); }
   .portfolio-item::before {
     content: '';
     position: absolute; inset: 0;
@@ -720,29 +728,29 @@
       <div class="gold-line" style="margin: 0 auto 0;"></div>
     </div>
     <div class="portfolio-grid">
-      <div class="portfolio-item" style="background:#1a3d2e;">
-        <div class="portfolio-placeholder">Photo Coming</div>
-        <div class="portfolio-item-label"><span>Kitchen Remodel</span>Walnut Creek, CA</div>
+      <div class="portfolio-item" style="background:#1a3d2e;" onclick="showPage('gallery')">
+        <img src="https://lh3.googleusercontent.com/d/1xiEiryF2TownHEGF1_q4K7V_TJ9FKD3D=w800" alt="Kitchen Remodel in Berkeley" loading="lazy" referrerpolicy="no-referrer">
+        <div class="portfolio-item-label"><span>Kitchen Remodel</span>Berkeley, CA</div>
       </div>
-      <div class="portfolio-item" style="background:#163326;">
-        <div class="portfolio-placeholder">Photo Coming</div>
-        <div class="portfolio-item-label"><span>ADU Build</span>Livermore, CA</div>
+      <div class="portfolio-item" style="background:#163326;" onclick="showPage('gallery')">
+        <img src="https://lh3.googleusercontent.com/d/1vXvonfPZXj1NUaQXKkOzuLYT5SZIYls5=w800" alt="Spa Bathroom in San Jose" loading="lazy" referrerpolicy="no-referrer">
+        <div class="portfolio-item-label"><span>Spa Bathroom</span>San Jose, CA</div>
       </div>
-      <div class="portfolio-item" style="background:#1f4535;">
-        <div class="portfolio-placeholder">Photo Coming</div>
-        <div class="portfolio-item-label"><span>Master Bath</span>Pleasanton, CA</div>
+      <div class="portfolio-item" style="background:#1f4535;" onclick="showPage('gallery')">
+        <img src="https://lh3.googleusercontent.com/d/1zCcSOD0RMJBEXQ6tsJK3n7UQ-iiq413c=w800" alt="Full Renovation in Discovery Bay" loading="lazy" referrerpolicy="no-referrer">
+        <div class="portfolio-item-label"><span>Full Renovation</span>Discovery Bay, CA</div>
       </div>
-      <div class="portfolio-item" style="background:#123020;">
-        <div class="portfolio-placeholder">Photo Coming</div>
-        <div class="portfolio-item-label"><span>Full Flip</span>Oakland, CA</div>
+      <div class="portfolio-item" style="background:#123020;" onclick="showPage('gallery')">
+        <img src="https://lh3.googleusercontent.com/d/1v1Zf-dNmkRv3z1KECSrpe834PRL41SP2=w800" alt="Master Bath in San Ramon" loading="lazy" referrerpolicy="no-referrer">
+        <div class="portfolio-item-label"><span>Master Bath</span>San Ramon, CA</div>
       </div>
-      <div class="portfolio-item" style="background:#1a3d2e;">
-        <div class="portfolio-placeholder">Photo Coming</div>
-        <div class="portfolio-item-label"><span>Unit Turnover</span>Fremont, CA</div>
+      <div class="portfolio-item" style="background:#1a3d2e;" onclick="showPage('gallery')">
+        <img src="https://lh3.googleusercontent.com/d/1K_EFYu3eyj2ozg8Zj_4IO6Z9C2L4T9vs=w800" alt="Custom tile work" loading="lazy" referrerpolicy="no-referrer">
+        <div class="portfolio-item-label"><span>Custom Tile Work</span>Bay Area, CA</div>
       </div>
-      <div class="portfolio-item" style="background:#163326;">
-        <div class="portfolio-placeholder">Photo Coming</div>
-        <div class="portfolio-item-label"><span>Kitchen & Bath</span>San Ramon, CA</div>
+      <div class="portfolio-item" style="background:#163326;" onclick="showPage('gallery')">
+        <img src="https://lh3.googleusercontent.com/d/18I7SZpBCCG31f-KSdS042i7SuJp9Umon=w800" alt="Stone countertops" loading="lazy" referrerpolicy="no-referrer">
+        <div class="portfolio-item-label"><span>Stone Countertops</span>Bay Area, CA</div>
       </div>
     </div>
     <div style="text-align:center; margin-top: 48px;">
