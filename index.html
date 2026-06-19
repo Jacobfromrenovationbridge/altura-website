@@ -1234,15 +1234,69 @@ function showPage(id) {
   return false;
 }
 
-function submitForm() {
-  const fname = document.getElementById('fname').value.trim();
-  const email = document.getElementById('email').value.trim();
+// ============================================================
+//  CONTACT FORM → HubSpot CRM
+// ============================================================
+// Leads from the "Send Us a Message" form post straight into HubSpot.
+// SETUP (one time): paste your two IDs below — see the step-by-step in
+// the chat / README. Until both are filled in, the form tells visitors
+// to call instead of silently losing their message.
+//   • Portal ID  = your HubSpot account ID (a number, e.g. 12345678)
+//   • Form GUID  = the id of the form you create in HubSpot
+//                  (looks like a1b2c3d4-1234-5678-9abc-def012345678)
+const CONTACT_CONFIG = {
+  hubspotPortalId: '246547004',
+  hubspotFormGuid: '0d07fee4-69c0-4fc0-ab6e-2f28726892a3',
+};
+
+async function submitForm() {
+  const val = id => (document.getElementById(id).value || '').trim();
+  const fname = val('fname'), lname = val('lname'), email = val('email');
+  const phone = val('phone'), service = val('service'), message = val('message');
+  const btn = document.querySelector('.form-submit');
+  const success = document.getElementById('form-success');
+
   if (!fname || !email) {
     alert('Please fill in your name and email address.');
     return;
   }
-  document.getElementById('form-success').style.display = 'block';
-  document.querySelector('.form-submit').style.display = 'none';
+
+  // Not connected yet → be honest instead of faking a success message.
+  if (!CONTACT_CONFIG.hubspotPortalId || !CONTACT_CONFIG.hubspotFormGuid) {
+    alert('Our contact form isn’t connected yet — please call us at (209) 662-9532 or email us directly. Thanks!');
+    return;
+  }
+
+  btn.disabled = true;
+  const originalLabel = btn.textContent;
+  btn.textContent = 'Sending…';
+
+  const notes = [service ? `Service interested in: ${service}` : '', message]
+    .filter(Boolean).join('\n\n');
+  const payload = {
+    fields: [
+      { name: 'firstname', value: fname },
+      { name: 'lastname', value: lname },
+      { name: 'email', value: email },
+      { name: 'phone', value: phone },
+      { name: 'message', value: notes },
+    ].filter(f => f.value),
+    context: { pageUri: location.href, pageName: document.title },
+  };
+
+  try {
+    const res = await fetch(
+      `https://api.hsforms.com/submissions/v3/integration/submit/${CONTACT_CONFIG.hubspotPortalId}/${CONTACT_CONFIG.hubspotFormGuid}`,
+      { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+    if (!res.ok) throw new Error('HubSpot ' + res.status);
+    success.style.display = 'block';
+    btn.style.display = 'none';
+  } catch (err) {
+    console.error('Contact form submit failed:', err);
+    btn.disabled = false;
+    btn.textContent = originalLabel;
+    alert('Sorry — something went wrong sending your message. Please call us at (209) 662-9532.');
+  }
 }
 
 // ============================================================
