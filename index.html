@@ -991,14 +991,20 @@
         <label>Email Address</label>
         <input type="email" placeholder="john@example.com" id="email">
       </div>
-      <div class="form-group">
-        <label>Phone Number</label>
-        <input type="tel" placeholder="(925) 555-0000" id="phone">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Phone Number</label>
+          <input type="tel" placeholder="(209) 662-9532" id="phone">
+        </div>
+        <div class="form-group">
+          <label>Zip Code</label>
+          <input type="text" inputmode="numeric" maxlength="10" placeholder="94501" id="zip">
+        </div>
       </div>
       <div class="form-group">
-        <label>Service Interested In</label>
+        <label>Project Type</label>
         <select id="service">
-          <option value="">Select a service...</option>
+          <option value="">Select a project type...</option>
           <option>Bath & Kitchen Remodel</option>
           <option>ADU Construction</option>
           <option>Plumbing</option>
@@ -1008,7 +1014,7 @@
         </select>
       </div>
       <div class="form-group">
-        <label>Tell Us About Your Project</label>
+        <label>Other Comments</label>
         <textarea id="message" placeholder="Describe your project, timeline, or any questions you have..."></textarea>
       </div>
       <button class="form-submit" onclick="submitForm()">Send Message</button>
@@ -1252,7 +1258,7 @@ const CONTACT_CONFIG = {
 async function submitForm() {
   const val = id => (document.getElementById(id).value || '').trim();
   const fname = val('fname'), lname = val('lname'), email = val('email');
-  const phone = val('phone'), service = val('service'), message = val('message');
+  const phone = val('phone'), zip = val('zip'), service = val('service'), message = val('message');
   const btn = document.querySelector('.form-submit');
   const success = document.getElementById('form-success');
 
@@ -1271,8 +1277,11 @@ async function submitForm() {
   const originalLabel = btn.textContent;
   btn.textContent = 'Sending…';
 
-  const notes = [service ? `Service interested in: ${service}` : '', message]
-    .filter(Boolean).join('\n\n');
+  const notes = [
+    service ? `Project type: ${service}` : '',
+    zip ? `Zip code: ${zip}` : '',
+    message ? `Comments: ${message}` : '',
+  ].filter(Boolean).join('\n');
   const payload = {
     fields: [
       { name: 'firstname', value: fname },
