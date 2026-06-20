@@ -1282,6 +1282,13 @@ async function submitForm() {
     zip ? `Zip code: ${zip}` : '',
     message ? `Comments: ${message}` : '',
   ].filter(Boolean).join('\n');
+  // Pass the HubSpot tracking cookie (hubspotutk) so the submission is tied
+  // to a known visitor — this is what stops HubSpot flagging it as spam from
+  // an "unknown domain". The cookie is set by the HubSpot tracking script.
+  const hutk = (document.cookie.match(/(?:^|;\s*)hubspotutk=([^;]+)/) || [])[1];
+  const context = { pageUri: location.href, pageName: document.title };
+  if (hutk) context.hutk = hutk;
+
   const payload = {
     fields: [
       { name: 'firstname', value: fname },
@@ -1290,7 +1297,7 @@ async function submitForm() {
       { name: 'phone', value: phone },
       { name: 'message', value: notes },
     ].filter(f => f.value),
-    context: { pageUri: location.href, pageName: document.title },
+    context,
   };
 
   try {
