@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Altura Design & Build</title>
+<meta name="description" content="Altura Design & Build — premium residential remodeling, kitchen & bath renovation, ADU construction, and plumbing serving the Bay Area.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Crect%20width='64'%20height='64'%20fill='%230d1a14'/%3E%3Ctext%20x='32'%20y='47'%20font-family='Georgia,serif'%20font-size='44'%20fill='%23C8A96A'%20text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -86,7 +88,8 @@
 
   /* ============ HOME ============ */
   .hero {
-    background: var(--green-dark);
+    background: linear-gradient(rgba(13,26,20,0.78), rgba(13,26,20,0.70)),
+      url('https://lh3.googleusercontent.com/d/1fFoxwjuqzyLrTMRJ4xrK1CaTOqzs3KZI=w1920') center 40% / cover no-repeat;
     min-height: 92vh;
     display: flex; flex-direction: column;
     align-items: center; justify-content: center;
@@ -209,9 +212,18 @@
     position: relative; overflow: hidden;
     min-height: 400px;
   }
-  .about-strip-img svg { width: 60%; opacity: 0.08; }
+  .about-strip-img img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+  }
+  .about-strip-img::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(13,26,20,0.6) 0%, transparent 45%);
+  }
   .about-strip-img .img-label {
-    position: absolute;
+    position: absolute; z-index: 2;
     font-family: 'Cinzel', serif;
     font-size: 10px;
     letter-spacing: 0.3em;
@@ -219,6 +231,29 @@
     text-transform: uppercase;
     bottom: 32px; left: 32px;
   }
+
+  /* TRUSTED SUPPLIERS MARQUEE */
+  .suppliers { background: var(--off-white); padding: 56px 0 60px; text-align: center; overflow: hidden; }
+  .suppliers-title {
+    font-family: 'Cinzel', serif; font-size: 12px; letter-spacing: 0.28em;
+    text-transform: uppercase; color: var(--green); margin-bottom: 38px;
+  }
+  .marquee {
+    position: relative; overflow: hidden;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+            mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+  }
+  .marquee-track {
+    display: inline-flex; align-items: center; gap: 56px;
+    white-space: nowrap; will-change: transform;
+    animation: marquee 45s linear infinite;
+  }
+  .marquee:hover .marquee-track { animation-play-state: paused; }
+  .marquee-track span {
+    font-family: 'Cinzel', serif; font-size: 15px; letter-spacing: 0.12em;
+    text-transform: uppercase; color: #6a6a6a;
+  }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
   /* SERVICES GRID */
   .services-section { background: var(--off-white); }
@@ -451,7 +486,7 @@
   }
   .contact-info p { color: rgba(242,242,242,0.6); font-size: 15px; margin-bottom: 40px; line-height: 1.8; }
   .contact-detail {
-    display: flex; align-items: flex-start; gap: 16px;
+    display: flex; align-items: center; gap: 16px;
     margin-bottom: 28px;
   }
   .contact-detail-icon {
@@ -653,6 +688,17 @@
     <div class="hero-divider"></div>
   </div>
 
+  <!-- TRUSTED LOCAL SUPPLIERS -->
+  <section class="suppliers">
+    <p class="suppliers-title">Trusted Local Suppliers</p>
+    <div class="marquee">
+      <div class="marquee-track">
+        <span>MSI</span><span>Ferguson Home</span><span>Daltile</span><span>Stoneville</span><span>Rev-A-Shelf</span><span>ABC Supply</span><span>Emser Tile</span><span>Republic Flooring</span><span>NGY Cabinets</span><span>Bedrosians</span><span>Bay Area Windows &amp; Doors</span><span>All Natural Stone</span><span>Neolith (Evolve Surface)</span><span>The Molding Company</span><span>Hardware Resources</span><span>General Plumbing</span>
+        <span aria-hidden="true">MSI</span><span aria-hidden="true">Ferguson Home</span><span aria-hidden="true">Daltile</span><span aria-hidden="true">Stoneville</span><span aria-hidden="true">Rev-A-Shelf</span><span aria-hidden="true">ABC Supply</span><span aria-hidden="true">Emser Tile</span><span aria-hidden="true">Republic Flooring</span><span aria-hidden="true">NGY Cabinets</span><span aria-hidden="true">Bedrosians</span><span aria-hidden="true">Bay Area Windows &amp; Doors</span><span aria-hidden="true">All Natural Stone</span><span aria-hidden="true">Neolith (Evolve Surface)</span><span aria-hidden="true">The Molding Company</span><span aria-hidden="true">Hardware Resources</span><span aria-hidden="true">General Plumbing</span>
+      </div>
+    </div>
+  </section>
+
   <!-- ABOUT SNIPPET -->
   <div class="about-strip">
     <div class="about-strip-text">
@@ -665,13 +711,8 @@
       <a class="btn-primary" href="#" onclick="showPage('about')" style="font-size:11px;">Learn More About Us</a>
     </div>
     <div class="about-strip-img">
+      <img src="https://lh3.googleusercontent.com/d/1xA7Jwn4YCO5Yy4MPLfUJHXOyUVij2yDk=w1200" alt="Altura kitchen remodel" loading="lazy" referrerpolicy="no-referrer">
       <div class="img-label">Est. in the Bay Area</div>
-      <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M100 20 L180 80 L180 180 L20 180 L20 80 Z" stroke="#C8A96A" stroke-width="2"/>
-        <rect x="80" y="120" width="40" height="60" stroke="#C8A96A" stroke-width="2"/>
-        <rect x="50" y="100" width="30" height="30" stroke="#C8A96A" stroke-width="1.5"/>
-        <rect x="120" y="100" width="30" height="30" stroke="#C8A96A" stroke-width="1.5"/>
-      </svg>
     </div>
   </div>
 
@@ -729,8 +770,8 @@
     </div>
     <div class="portfolio-grid">
       <div class="portfolio-item" style="background:#1a3d2e;" onclick="showPage('gallery')">
-        <img src="https://lh3.googleusercontent.com/d/1xiEiryF2TownHEGF1_q4K7V_TJ9FKD3D=w800" alt="Kitchen Remodel in Berkeley" loading="lazy" referrerpolicy="no-referrer">
-        <div class="portfolio-item-label"><span>Kitchen Remodel</span>Berkeley, CA</div>
+        <img src="https://lh3.googleusercontent.com/d/1fUAE8JXqx3snaCBPMgRSo8CzSn5WWdnC=w800" alt="Kitchen Remodel in Fremont" loading="lazy" referrerpolicy="no-referrer">
+        <div class="portfolio-item-label"><span>Kitchen Remodel</span>Fremont, CA</div>
       </div>
       <div class="portfolio-item" style="background:#163326;" onclick="showPage('gallery')">
         <img src="https://lh3.googleusercontent.com/d/1vXvonfPZXj1NUaQXKkOzuLYT5SZIYls5=w800" alt="Spa Bathroom in San Jose" loading="lazy" referrerpolicy="no-referrer">
@@ -832,12 +873,14 @@
   </div>
   <div class="about-content">
     <h2>Who We Are</h2>
-    <p>Altura Design & Build is a residential remodeling and construction company serving the Bay Area. We were founded by tradespeople who grew frustrated watching homeowners get burned by contractors who overpromised and underdelivered — so we decided to do things differently.</p>
-    <p>We operate with a simple philosophy: treat every project like it's our own home. That means honest estimates, clean job sites, skilled workmanship, and communication that actually keeps you in the loop.</p>
+    <p>Altura Design & Build is a residential remodeling and construction company serving the Bay Area and surrounding communities.</p>
+    <p>Our experience in residential remodeling dates back to 2010, built through years of hands-on work, project management, and seeing firsthand what homeowners need most from a contractor: honesty, communication, quality workmanship, and follow-through.</p>
+    <p>Altura was founded with a simple goal — to provide homeowners with a better remodeling experience. Too many people have dealt with contractors who overpromise, underdeliver, or leave them confused about pricing, timelines, and scope of work. We believe the process should be different.</p>
 
     <h2>What We Believe</h2>
-    <p>We believe your home is one of the most important investments you'll ever make. When you hire us, you're not just hiring a contractor — you're hiring a partner who takes that responsibility seriously.</p>
-    <p>We don't take on commercial work or stretch ourselves thin across too many projects. We stay focused on residential remodeling because that's where our passion and expertise live. Every project gets our full attention.</p>
+    <p>Our philosophy is simple: treat every project like it is our own home. That means honest estimates, clean job sites, skilled workmanship, clear communication, and work built to last.</p>
+    <p>Whether it is a kitchen remodel, bathroom renovation, addition, garage conversion, or full home improvement project, we strive to deliver work that is transparent, dependable, and done with care.</p>
+    <p>At Altura Design & Build, we are committed to building spaces our clients can trust, enjoy, and be proud of for years to come.</p>
 
     <div class="about-vals">
       <div class="val-pill">Quality First</div>
@@ -848,7 +891,13 @@
     </div>
 
     <h2>Our Service Area</h2>
-    <p>We proudly serve homeowners and investors across the East Bay and Tri-Valley — including Livermore, Pleasanton, Walnut Creek, Danville, San Ramon, Dublin, Fremont, Oakland, and surrounding communities.</p>
+    <p>We proudly serve homeowners and investors across the Bay Area, covering the following counties:</p>
+    <div class="about-vals">
+      <div class="val-pill">Alameda County</div>
+      <div class="val-pill">Contra Costa County</div>
+      <div class="val-pill">San Joaquin County</div>
+      <div class="val-pill">Santa Clara County</div>
+    </div>
 
     <h2>Ready to Start?</h2>
     <p>Every project starts with a free consultation. Tell us what you're envisioning and we'll put together an honest, detailed estimate — no pressure, no runaround.</p>
@@ -953,7 +1002,7 @@
         </div>
         <div>
           <p class="contact-detail-label">Service Area</p>
-          <p class="contact-detail-value">East Bay & Tri-Valley, California</p>
+          <p class="contact-detail-value">Alameda · Contra Costa · San Joaquin · Santa Clara Counties, CA</p>
         </div>
       </div>
       <div class="contact-detail">
@@ -1200,6 +1249,8 @@
       <p class="footer-brand-name">ALTURA</p>
       <p class="footer-brand-sub">Design & Build</p>
       <p>Premium residential remodeling and construction services for Bay Area homeowners and investors.</p>
+      <!-- TODO: replace "Licensed & Insured" with the real CSLB number, e.g. "CSLB Lic. #1234567" -->
+      <p style="margin-top:14px; color:var(--gold); font-family:'Cinzel',serif; font-size:11px; letter-spacing:0.12em;">Licensed &amp; Insured California Contractor</p>
     </div>
     <div class="footer-col">
       <h4>Navigation</h4>
@@ -1224,8 +1275,8 @@
     </div>
   </div>
   <div class="footer-bottom">
-    <p>© 2025 Altura Design & Build. All rights reserved. · Licensed California Contractor</p>
-    <p>East Bay & Tri-Valley, California</p>
+    <p>© 2025 Altura Design & Build. All rights reserved. · Licensed & Insured California Contractor</p>
+    <p>Serving Alameda, Contra Costa, San Joaquin & Santa Clara Counties, California</p>
   </div>
 </footer>
 
@@ -1352,7 +1403,6 @@ const GALLERY_CONFIG = {
 const FOLDER_MAP = {
     "2019 Hayward After Pictures OAKES": { cat: 'flip', project: "Oakes Residence", location: 'Hayward, CA' },
     "2019 San Francisco After Harin": { cat: 'flip', project: "Harin Residence", location: 'San Francisco, CA' },
-    "2023 CHANNING Before and After ( Kitchen Experts)": { cat: 'kitchen', project: "Channing Kitchen", location: 'Berkeley, CA' },
     "2023 Hayward Mahal": { cat: 'flip', project: "Mahal Project", location: 'Hayward, CA' },
     "2023 San Jose BURKE": { cat: 'flip', project: "Burke Residence", location: 'San Jose, CA' },
     "2023 San Jose LaTorre": { cat: 'flip', project: "LaTorre Residence", location: 'San Jose, CA' },
@@ -1437,6 +1487,15 @@ const PHOTO_OVERRIDES = {
 
 // Snapshot of the current Drive gallery (172 photos) — shown immediately,
 // and used as a fallback if the live Drive load is unavailable.
+// Folders and individual photos to keep OUT of the gallery (client requests).
+// Applied to the live Drive sync so removed items don't reappear.
+const EXCLUDE_FOLDERS = ['2023 CHANNING Before and After ( Kitchen Experts)'];
+const EXCLUDE_PHOTOS = new Set([
+  '1KsT3vRhAj01qNMdcfCyLj9MznWHV8Yb-',  // MISC kitchen
+  '1gWJAwZFhFYnHouFLI-6gVRkmXQOOgyNY',  // LaTorre mirror selfie (person)
+  '1x9x5Y1uEplvcH9-OagCrNMJmo8wR1UwN',  // Bris bathroom (person in mirror)
+]);
+
 const FALLBACK_PROJECTS = [
   // --- FLIP ---
   { id: '1xA7Jwn4YCO5Yy4MPLfUJHXOyUVij2yDk', cat: 'flip', project: "Oakes Residence", location: 'Hayward, CA' },
@@ -1477,25 +1536,14 @@ const FALLBACK_PROJECTS = [
   { id: '1vXvonfPZXj1NUaQXKkOzuLYT5SZIYls5', cat: 'flip', project: "LaTorre Residence", location: 'San Jose, CA' },
   { id: '17j_z5H1SPxxlpjknuzqvrljr84qM2LhQ', cat: 'flip', project: "LaTorre Residence", location: 'San Jose, CA' },
   { id: '1uC_PBtm8b2yTgOJxIo_oBKEh92rQ2kCY', cat: 'flip', project: "LaTorre Residence", location: 'San Jose, CA' },
-  { id: '1gWJAwZFhFYnHouFLI-6gVRkmXQOOgyNY', cat: 'flip', project: "LaTorre Residence", location: 'San Jose, CA' },
   { id: '1Y-vO4adoStEHAMvigY6X4AvMh-deY6SP', cat: 'flip', project: "LaTorre Residence", location: 'San Jose, CA' },
   { id: '1Vrtf1qxZ_XP429FJwMN23XlKC-yDrgY4', cat: 'flip', project: "LaTorre Residence", location: 'San Jose, CA' },
   { id: '1oa8_6WQ4axtcEpc89NjKR0BAzRukLOuP', cat: 'flip', project: "Bris Project", location: 'Discovery Bay, CA' },
-  { id: '1x9x5Y1uEplvcH9-OagCrNMJmo8wR1UwN', cat: 'flip', project: "Bris Project", location: 'Discovery Bay, CA' },
   { id: '1zCcSOD0RMJBEXQ6tsJK3n7UQ-iiq413c', cat: 'flip', project: "Bris Project", location: 'Discovery Bay, CA' },
   { id: '1oT1gNF7UiIZN4MuVHVljTRrf0YUdshS8', cat: 'flip', project: "Bris Project", location: 'Discovery Bay, CA' },
   { id: '1e6gpKqPVcORX2iPv4LDa6gDCMrwZLimz', cat: 'flip', project: "Bris Project", location: 'Discovery Bay, CA' },
   { id: '1Tp56Z6VBKi-TJ3wVGvCYakl0xfvwhX53', cat: 'flip', project: "Bris Project", location: 'Discovery Bay, CA' },
   // --- KITCHEN ---
-  { id: '1xiEiryF2TownHEGF1_q4K7V_TJ9FKD3D', cat: 'kitchen', project: "Channing Kitchen", location: 'Berkeley, CA' },
-  { id: '1RAVblcpsHBeXozqEg5r7PVx2rVJSbduA', cat: 'kitchen', project: "Channing Kitchen", location: 'Berkeley, CA' },
-  { id: '1ywnQjibTVsmAaEFR0IRvIPe3k5kdv5De', cat: 'kitchen', project: "Channing Kitchen", location: 'Berkeley, CA' },
-  { id: '19tOTVJw5vzhpXYNeiBRJuTIOFBfc-P1R', cat: 'kitchen', project: "Channing Kitchen", location: 'Berkeley, CA' },
-  { id: '1HLhdwU-oq4A8PIxVoNZi2TFxlwEstZRw', cat: 'kitchen', project: "Channing Kitchen", location: 'Berkeley, CA' },
-  { id: '1C0MapDbSwjNDrv-FUrfpSF2yIE_dZyz8', cat: 'kitchen', project: "Channing Kitchen", location: 'Berkeley, CA' },
-  { id: '1M_hzFr4j_0A5oYtUo_sYr6lPLw4l6WN1', cat: 'kitchen', project: "Channing Kitchen", location: 'Berkeley, CA' },
-  { id: '1fejqaVXP2nmTlH3yzAx2frjUVKTN_hes', cat: 'kitchen', project: "Channing Kitchen", location: 'Berkeley, CA' },
-  { id: '10o_t_oh7uSWXzjDkrF3U83ia61FIpVUb', cat: 'kitchen', project: "Channing Kitchen", location: 'Berkeley, CA' },
   { id: '1fUAE8JXqx3snaCBPMgRSo8CzSn5WWdnC', cat: 'kitchen', project: "Fremont Kitchen", location: 'Fremont, CA' },
   { id: '1dYO0CZBHOQmAONwJDEs9KHpaZWJ6iqRq', cat: 'kitchen', project: "Fremont Kitchen", location: 'Fremont, CA' },
   { id: '1_v32tnl3bHncjDnnnEPTCpsJKdK5SuU1', cat: 'kitchen', project: "Fremont Kitchen", location: 'Fremont, CA' },
@@ -1617,7 +1665,6 @@ const FALLBACK_PROJECTS = [
   { id: '11ZkhV5fO-645APe3Q25e3j5_XeTohIph', cat: 'misc', project: "Project Highlight", location: 'Bay Area, CA' },
   { id: '1GG9891--b7By_5aR4j2YO43ZUoUb5m4f', cat: 'misc', project: "Project Highlight", location: 'Bay Area, CA' },
   { id: '1KIPHgMPalp1r13r40_bn8UV5iV7fRjfJ', cat: 'misc', project: "Project Highlight", location: 'Bay Area, CA' },
-  { id: '1KsT3vRhAj01qNMdcfCyLj9MznWHV8Yb-', cat: 'misc', project: "Project Highlight", location: 'Bay Area, CA' },
 ];
 
 // Live gallery data — populated from Drive on load (or from FALLBACK_PROJECTS).
@@ -1669,7 +1716,7 @@ async function loadProjectFolder(folder) {
   const meta = resolveFolder(folder.name);
   const imgs = await driveList(
     `'${folder.id}' in parents and mimeType contains 'image/' and trashed = false`);
-  return imgs.map(img => ({
+  return imgs.filter(img => !EXCLUDE_PHOTOS.has(img.id)).map(img => ({
     id: img.id, cat: meta.cat, project: meta.project, location: meta.location,
   }));
 }
@@ -1686,8 +1733,10 @@ async function loadGalleryFromDrive() {
   try {
     const children = await driveList(
       `'${GALLERY_CONFIG.masterFolderId}' in parents and trashed = false`);
-    const subfolders = children.filter(c => c.mimeType === FOLDER_MIME);
-    const looseImgs = children.filter(c => (c.mimeType || '').startsWith('image/'));
+    const subfolders = children.filter(c => c.mimeType === FOLDER_MIME
+      && !EXCLUDE_FOLDERS.includes(c.name));
+    const looseImgs = children.filter(c => (c.mimeType || '').startsWith('image/')
+      && !EXCLUDE_PHOTOS.has(c.id));
     const folderResults = await Promise.all(subfolders.map(loadProjectFolder));
     galleryProjects = folderResults.flat();
     // Loose photos sitting directly in the master folder → Misc.
