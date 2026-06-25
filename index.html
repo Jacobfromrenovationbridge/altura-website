@@ -484,26 +484,29 @@
     margin-bottom: 8px;
     font-weight: 400;
   }
-  .contact-info p { color: rgba(242,242,242,0.6); font-size: 15px; margin-bottom: 40px; line-height: 1.8; }
+  .contact-info p { color: rgba(242,242,242,0.6); font-size: 15px; margin-bottom: 28px; line-height: 1.8; }
+  .contact-details { border-top: 1px solid rgba(200,169,106,0.14); }
   .contact-detail {
-    display: flex; align-items: center; gap: 16px;
-    margin-bottom: 28px;
+    display: flex; align-items: center; gap: 14px;
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(200,169,106,0.14);
   }
   .contact-detail-icon {
-    width: 40px; height: 40px; flex-shrink: 0;
-    border: 1px solid rgba(200,169,106,0.35);
+    width: 34px; height: 34px; flex-shrink: 0; border-radius: 50%;
+    border: 1px solid rgba(200,169,106,0.3);
+    background: rgba(200,169,106,0.06);
     display: flex; align-items: center; justify-content: center;
   }
-  .contact-detail-icon svg { width: 18px; height: 18px; stroke: var(--gold); fill: none; stroke-width: 1.5; }
+  .contact-detail-icon svg { width: 15px; height: 15px; stroke: var(--gold); fill: none; stroke-width: 1.5; }
   .contact-detail-label {
     font-family: 'Cinzel', serif;
-    font-size: 10px;
-    letter-spacing: 0.2em;
+    font-size: 9px;
+    letter-spacing: 0.22em;
     color: var(--gold);
     text-transform: uppercase;
-    margin-bottom: 4px;
+    margin-bottom: 3px;
   }
-  .contact-detail-value { font-size: 14px; color: rgba(242,242,242,0.8); }
+  .contact-detail-value { font-size: 14px; color: rgba(242,242,242,0.85); letter-spacing: 0.01em; }
 
   .contact-form-side { background: var(--off-white); padding: 72px 64px; display: flex; flex-direction: column; justify-content: center; }
   .contact-form-side h3 {
@@ -996,6 +999,7 @@
     <div class="contact-info">
       <h2>Let's Build Something</h2>
       <p>Have a project in mind? Ready to get a quote? We'd love to hear from you. Fill out the form and we'll be in touch shortly.</p>
+      <div class="contact-details">
       <div class="contact-detail">
         <div class="contact-detail-icon">
           <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
@@ -1022,6 +1026,7 @@
           <p class="contact-detail-label">Email</p>
           <p class="contact-detail-value">info@alturadesignandbuild.com</p>
         </div>
+      </div>
       </div>
     </div>
     <div class="contact-form-side">
@@ -1493,6 +1498,8 @@ const EXCLUDE_PHOTOS = new Set([
   '1KsT3vRhAj01qNMdcfCyLj9MznWHV8Yb-',  // MISC kitchen
   '1gWJAwZFhFYnHouFLI-6gVRkmXQOOgyNY',  // LaTorre mirror selfie (person)
   '1x9x5Y1uEplvcH9-OagCrNMJmo8wR1UwN',  // Bris bathroom (person in mirror)
+  '1Tp56Z6VBKi-TJ3wVGvCYakl0xfvwhX53',  // Bris bathroom (people in mirror)
+  '1oT1gNF7UiIZN4MuVHVljTRrf0YUdshS8',  // Bris bathroom (person in mirror)
 ]);
 
 const FALLBACK_PROJECTS = [
@@ -1539,9 +1546,7 @@ const FALLBACK_PROJECTS = [
   { id: '1Vrtf1qxZ_XP429FJwMN23XlKC-yDrgY4', cat: 'flip', project: "LaTorre Residence", location: 'San Jose, CA' },
   { id: '1oa8_6WQ4axtcEpc89NjKR0BAzRukLOuP', cat: 'flip', project: "Bris Project", location: 'Discovery Bay, CA' },
   { id: '1zCcSOD0RMJBEXQ6tsJK3n7UQ-iiq413c', cat: 'flip', project: "Bris Project", location: 'Discovery Bay, CA' },
-  { id: '1oT1gNF7UiIZN4MuVHVljTRrf0YUdshS8', cat: 'flip', project: "Bris Project", location: 'Discovery Bay, CA' },
   { id: '1e6gpKqPVcORX2iPv4LDa6gDCMrwZLimz', cat: 'flip', project: "Bris Project", location: 'Discovery Bay, CA' },
-  { id: '1Tp56Z6VBKi-TJ3wVGvCYakl0xfvwhX53', cat: 'flip', project: "Bris Project", location: 'Discovery Bay, CA' },
   // --- KITCHEN ---
   { id: '1fUAE8JXqx3snaCBPMgRSo8CzSn5WWdnC', cat: 'kitchen', project: "Fremont Kitchen", location: 'Fremont, CA' },
   { id: '1dYO0CZBHOQmAONwJDEs9KHpaZWJ6iqRq', cat: 'kitchen', project: "Fremont Kitchen", location: 'Fremont, CA' },
